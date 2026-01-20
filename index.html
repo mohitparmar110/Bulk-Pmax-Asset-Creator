@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bulk Overlay Tool (No Resize)</title>
+  <style>
+    body{font-family:system-ui,Arial;margin:20px;max-width:980px}
+    .row{display:flex;gap:16px;flex-wrap:wrap}
+    .card{border:1px solid #ddd;border-radius:10px;padding:14px;flex:1;min-width:280px}
+    label{font-weight:600;display:block;margin:10px 0 6px}
+    input[type="file"]{width:100%}
+    button{padding:10px 14px;border-radius:10px;border:1px solid #222;background:#111;color:#fff;cursor:pointer}
+    button:disabled{opacity:.5;cursor:not-allowed}
+    .small{font-size:12px;color:#555}
+    .log{white-space:pre-wrap;background:#0b1020;color:#d7e3ff;padding:12px;border-radius:10px;min-height:140px}
+    .pill{display:inline-block;padding:4px 10px;border-radius:999px;background:#f2f2f2;margin-right:6px}
+  </style>
+</head>
+<body>
+  <h2>Bulk Overlay Tool (No Resize)</h2>
+  <p class="small">
+    Rule: Overlay PNG size must EXACTLY match the base image size. Tool only pastes overlay (no crop/resize).
+  </p>
+
+  <div class="row">
+    <div class="card">
+      <h3>1) Upload Overlays (3 PNGs)</h3>
+      <label>Overlay PNGs (select 3)</label>
+      <input id="overlays" type="file" accept="image/png" multiple />
+      <div id="overlayInfo" class="small" style="margin-top:10px;"></div>
+      <div class="small" style="margin-top:10px;">
+        Tip: If your three sizes are 1200×628, 1200×1200, 960×1200 then your overlays must be exactly those.
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>2) Upload Images (100+)</h3>
+      <label>Base images (JPG/PNG)</label>
+      <input id="images" type="file" accept="image/*" multiple />
+      <label>Output format</label>
+      <select id="format">
+        <option value="image/jpeg">JPG</option>
+        <option value="image/png">PNG</option>
+      </select>
+      <label>Placement</label>
+      <select id="placement">
+        <option value="topleft">Top-left</option>
+        <option value="center">Center</option>
+      </select>
+      <div style="margin-top:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <button id="runBtn" disabled>Process & Download ZIP</button>
+        <span id="stats" class="small"></span>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:22px;">Log</h3>
+  <div id="log" class="log"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script>
+    const overlaysInput = document.getElementById('overlays');
+    const imagesInput = document.getElementById('images');
+    const runBtn = document.getElementById('runBtn');
+    const logEl = document.getElementById('log');
+    const overlayInfo = document.getElementById('overlayInfo');
+    const statsEl = document.getElementById('stats');
+    const formatEl = document.getElementById('format');
+    const placementEl = document.getElementById('placement');
+
+    const overlayMap = new Map(); // key "WxH" -> {file, bitmap, w, h}
+
+    function log(s){
+      logEl.textContent += s + "\n";
+      logEl.scrollTop = logEl.scrollHeight;
+    }
+
+    async function fileToBitmap(file){
+      const buf = await file.arrayBuffer();
+      const blob = new Blob([buf], {type: file.type});
+      return await createImageBitmap(blob);
+    }
+
+    function keyWH(w,h){ return `${w}x${h}`; }
+
+    async function loadOverlays(){
+      overlayMap.clear();
+      overlayInfo.innerHTML = "";
+      const files = Array.from(overlaysInput.files || []);
+      if (!files.length) return;
+
+      logEl.textContent = "";
+      log("Loading overlays...");
+      for (const f of files){
+        if (!f.type.includes("png")) {
+          log(`Skipping non-PNG overlay: ${f.name}`);
+          continue;
+        }
+        const bmp = await fileToBitmap(f);
+        const k = keyWH(bmp.width, bmp.height);
+        overlayMap.set(k, { file:f, bitmap:bmp, w:bmp.width, h:bmp.height });
+        log(`Overlay loaded: ${f.name} => ${k}`);
+      }
+
+      overlayInfo.innerHTML = Array.from(overlayMap.values()).map(o =>
+        `<div class="pill">${o.file.name} • ${o.w}×${o.h}</div>`
+      ).join("");
+
+      updateRunEnabled();
+    }
+
+    function updateRunEnabled(){
+      const hasImages = (imagesInput.files && imagesInput.files.length > 0);
+      const hasOverlays = overlayMap.size > 0;
+      runBtn.disabled = !(hasImages && hasOverlays);
+    }
+
+    overlaysInput.addEventListener('change', loadOverlays);
+    imagesInput.addEventListener('change', updateRunEnabled);
+
+    async function bitmapToBlob(canvas, mime){
+      return await new Promise(resolve => canvas.toBlob(resolve, mime, mime==="image/jpeg"?0.92:undefined));
+    }
+
+    function safeName(name){
+      return name.replace(/[^\w\-\.]+/g, "_");
+    }
+
+    runBtn.addEventListener('click', async () => {
+      runBtn.disabled = true;
+      const files = Array.from(imagesInput.files || []);
+      const mime = formatEl.value;
+      const placement = placementEl.value;
+
+      log("Starting processing...");
+      statsEl.textContent = "";
+      const zip = new JSZip();
+      const matchedFolder = zip.folder("matched");
+      const unmatchedFolder = zip.folder("unmatched");
+
+      let ok=0, bad=0;
+
+      // Process sequentially to avoid RAM spikes
+      for (let i=0; i<files.length; i++){
+        const f = files[i];
+        try{
+          const baseBmp = await fileToBitmap(f);
+          const k = keyWH(baseBmp.width, baseBmp.height);
+          const overlay = overlayMap.get(k);
+
+          if (!overlay){
+            // Put original into unmatched (optional)
+            const origBuf = await f.arrayBuffer();
+            unmatchedFolder.file(`${k}/${safeName(f.name)}`, origBuf);
+            bad++;
+            log(`[${i+1}/${files.length}] UNMATCHED ${f.name} (${k})`);
+            statsEl.textContent = `Matched: ${ok} | Unmatched: ${bad}`;
+            continue;
+          }
+
+          const canvas = document.createElement('canvas');
+          canvas.width = baseBmp.width;
+          canvas.height = baseBmp.height;
+          const ctx = canvas.getContext('2d');
+
+          // draw base
+          ctx.drawImage(baseBmp, 0, 0);
+
+          // draw overlay (no resize)
+          let ox = 0, oy = 0;
+          if (placement === "center") {
+            ox = Math.floor((baseBmp.width - overlay.w) / 2);
+            oy = Math.floor((baseBmp.height - overlay.h) / 2);
+          }
+          ctx.drawImage(overlay.bitmap, ox, oy);
+
+          const outBlob = await bitmapToBlob(canvas, mime);
+          const outBuf = await outBlob.arrayBuffer();
+
+          const ext = (mime === "image/png") ? "png" : "jpg";
+          const baseName = f.name.replace(/\.[^.]+$/, "");
+          const outName = `${safeName(baseName)}__${k}.${ext}`;
+
+          matchedFolder.file(`${k}/${outName}`, outBuf);
+          ok++;
+          log(`[${i+1}/${files.length}] OK ${f.name} (${k})`);
+          statsEl.textContent = `Matched: ${ok} | Unmatched: ${bad}`;
+        } catch (e){
+          bad++;
+          log(`[${i+1}/${files.length}] ERROR ${f.name} (${e?.message || e})`);
+          statsEl.textContent = `Matched: ${ok} | Unmatched: ${bad}`;
+        }
+      }
+
+      log("Zipping...");
+      const zipBlob = await zip.generateAsync({type:"blob"});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(zipBlob);
+      a.download = `bulk_overlay_output.zip`;
+      a.click();
+      URL.revokeObjectURL(a.href);
+
+      log("Done.");
+      runBtn.disabled = false;
+    });
+  </script>
+</body>
+</html>
