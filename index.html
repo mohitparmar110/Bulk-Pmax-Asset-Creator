@@ -4,15 +4,16 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>OverlayForge</title>
-  <meta name="description" content="Apply overlay templates to hundreds of images by size — clean, fast, and pixel-perfect." />
+  <meta name="description" content="OverlayForge applies the correct overlay to images automatically by size." />
 
   <style>
     :root{
       --bg:#0b0f18;
-      --panel:#0f1626;
-      --card:#111b2f;
+      --panel:rgba(255,255,255,.05);
+      --card:rgba(255,255,255,.04);
       --line:rgba(255,255,255,.10);
       --line2:rgba(255,255,255,.06);
+
       --text:#eaf0ff;
       --muted:rgba(234,240,255,.72);
 
@@ -25,9 +26,8 @@
 
       --r:18px;
       --r2:14px;
-
-      --shadow: 0 18px 60px rgba(0,0,0,.45);
-      --shadow2: 0 10px 30px rgba(0,0,0,.28);
+      --shadow: 0 18px 70px rgba(0,0,0,.50);
+      --shadow2: 0 12px 34px rgba(0,0,0,.30);
     }
 
     *{box-sizing:border-box}
@@ -40,9 +40,11 @@
         radial-gradient(900px 600px at 20% 0%, rgba(124,58,237,.22), transparent 60%),
         radial-gradient(900px 600px at 90% 10%, rgba(167,139,250,.14), transparent 60%),
         linear-gradient(180deg, #070a12, var(--bg));
+      overflow-x:hidden;
     }
 
-    .wrap{max-width:1040px;margin:0 auto;padding:22px 18px 40px}
+    .wrap{max-width:1140px;margin:0 auto;padding:22px 18px 90px}
+
     .top{
       display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
       padding:14px 16px;
@@ -52,13 +54,11 @@
       box-shadow: var(--shadow2);
       backdrop-filter: blur(10px);
     }
-    .brand{
-      display:flex;align-items:center;gap:12px;
-    }
+    .brand{display:flex;align-items:center;gap:12px}
     .logo{
       width:40px;height:40px;border-radius:14px;
       background: linear-gradient(135deg, var(--brand), var(--brand2));
-      box-shadow: 0 14px 30px rgba(124,58,237,.25);
+      box-shadow: 0 14px 34px rgba(124,58,237,.25);
     }
     .brand h1{margin:0;font-size:16px;letter-spacing:.2px}
     .brand p{margin:2px 0 0;font-size:12px;color:var(--muted)}
@@ -73,31 +73,15 @@
     }
     .pill b{color:var(--text)}
 
-    .tabs{
+    .layout{
       margin-top:14px;
-      display:flex;gap:8px;flex-wrap:wrap;
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:14px;
     }
-    .tab{
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.03);
-      color:var(--muted);
-      padding:10px 12px;
-      border-radius: 999px;
-      cursor:pointer;
-      font-weight:750;
-      font-size:12px;
-      transition: transform .12s ease, background .12s ease, border-color .12s ease;
-      user-select:none;
-    }
-    .tab:hover{transform: translateY(-1px); background: rgba(255,255,255,.05)}
-    .tab.active{
-      color:var(--text);
-      border-color: rgba(167,139,250,.35);
-      background: linear-gradient(135deg, rgba(124,58,237,.30), rgba(167,139,250,.14));
-    }
+    @media (max-width: 980px){ .layout{grid-template-columns:1fr} }
 
     .panel{
-      margin-top:12px;
       border:1px solid var(--line);
       border-radius: var(--r);
       background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
@@ -115,9 +99,7 @@
     .head .hint{font-size:12px;color:var(--muted)}
     .body{padding:16px}
 
-    .grid3{
-      display:grid;grid-template-columns:repeat(3,1fr);gap:12px;
-    }
+    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
     @media (max-width: 980px){ .grid3{grid-template-columns:1fr} }
 
     .card{
@@ -129,6 +111,7 @@
     }
     .cardTop{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
     .cardTop h3{margin:0;font-size:13px}
+
     .chip{
       display:inline-flex;align-items:center;gap:8px;
       padding:6px 10px;border-radius:999px;
@@ -144,8 +127,7 @@
     .chip.bad{border-color:rgba(239,68,68,.35); color:rgba(239,68,68,.95); background:rgba(239,68,68,.08)}
     .chip.bad .dot{background:var(--bad); box-shadow:0 0 0 3px rgba(239,68,68,.14)}
 
-    .row{margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-    .label{font-size:12px;color:var(--muted);margin-bottom:6px}
+    .label{font-size:12px;color:var(--muted);margin:10px 0 6px}
     .btn{
       border:1px solid rgba(255,255,255,.12);
       background: rgba(255,255,255,.06);
@@ -156,19 +138,15 @@
       font-weight:850;
       transition: transform .12s ease, background .12s ease, border-color .12s ease;
       user-select:none;
+      width:100%;
+      text-align:center;
     }
     .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.08)}
     .btn:disabled{opacity:.55;cursor:not-allowed;transform:none}
-    .btnPrimary{
-      background: linear-gradient(135deg, var(--brand), var(--brand2));
-      border-color: rgba(124,58,237,.55);
-      box-shadow: 0 12px 28px rgba(124,58,237,.20);
-    }
-    .btnGhost{background: rgba(255,255,255,.04)}
 
     .fileName{
       font-size:12px;color:var(--muted);
-      max-width:100%;
+      margin-top:8px;
       overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
     }
 
@@ -183,7 +161,6 @@
       position:relative;
       min-height:120px;
     }
-    .thumb canvas{width:100%;height:auto;display:block}
     .thumb .cap{
       position:absolute;top:10px;left:10px;
       font-size:11px;color:rgba(234,240,255,.88);
@@ -192,6 +169,7 @@
       background: rgba(0,0,0,.30);
       backdrop-filter: blur(6px);
     }
+    canvas{width:100%;height:auto;display:block}
 
     .drop{
       border:1px dashed rgba(167,139,250,.60);
@@ -214,11 +192,18 @@
       outline:none;
     }
 
-    .stats{
-      margin-top:12px;
-      display:grid;grid-template-columns:repeat(4,1fr);gap:10px;
+    .rightStack{display:grid;gap:12px}
+    .info{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      border-radius: var(--r);
+      padding:14px;
+      box-shadow: 0 10px 22px rgba(0,0,0,.22);
     }
-    @media (max-width: 980px){ .stats{grid-template-columns:repeat(2,1fr)} }
+    .info h4{margin:0 0 6px;font-size:13px}
+    .info p{margin:0;color:var(--muted);font-size:12px;line-height:1.5}
+
+    .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}
     .stat{
       border:1px solid var(--line);
       background: rgba(255,255,255,.03);
@@ -227,6 +212,7 @@
     }
     .stat .k{font-size:11px;color:var(--muted)}
     .stat .v{margin-top:2px;font-size:18px;font-weight:950}
+
     .progress{
       margin-top:12px;
       border:1px solid var(--line);
@@ -255,7 +241,35 @@
       overflow:auto;
     }
 
-    .hide{display:none !important;}
+    .bottomBar{
+      position:fixed;left:0;right:0;bottom:0;
+      padding:12px;
+      background: rgba(7,10,18,.55);
+      border-top:1px solid rgba(255,255,255,.10);
+      backdrop-filter: blur(14px);
+    }
+    .bottomInner{
+      max-width:1140px;margin:0 auto;
+      display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;
+    }
+    .cta{
+      display:flex;gap:10px;align-items:center;flex-wrap:wrap;
+    }
+    .btnPrimary{
+      border:1px solid rgba(124,58,237,.55);
+      background: linear-gradient(135deg, var(--brand), var(--brand2));
+      box-shadow: 0 12px 28px rgba(124,58,237,.20);
+      padding:10px 14px;
+      border-radius: 14px;
+      font-weight:950;
+      cursor:pointer;
+      color:var(--text);
+      transition: transform .12s ease, filter .12s ease;
+    }
+    .btnPrimary:hover{transform: translateY(-1px); filter:brightness(1.05)}
+    .btnPrimary:disabled{opacity:.55;cursor:not-allowed;transform:none}
+
+    .mini{font-size:12px;color:var(--muted)}
   </style>
 </head>
 
@@ -266,7 +280,7 @@
         <div class="logo"></div>
         <div>
           <h1>OverlayForge</h1>
-          <p>Apply the right overlay to every image — automatically by size.</p>
+          <p>Apply overlays to images automatically by size.</p>
         </div>
       </div>
       <div class="sizes">
@@ -276,173 +290,149 @@
       </div>
     </div>
 
-    <div class="tabs">
-      <div class="tab active" data-tab="templates">1) Templates</div>
-      <div class="tab" data-tab="upload">2) Upload</div>
-      <div class="tab" data-tab="export">3) Export</div>
-    </div>
-
-    <!-- TEMPLATES -->
-    <div class="panel" id="tab_templates">
-      <div class="head">
-        <div>
-          <h2>Upload overlay templates</h2>
-          <div class="hint">Overlays must match the exact size. No resizing.</div>
-        </div>
-        <div class="hint" id="topStatus">Waiting</div>
-      </div>
-      <div class="body">
-        <div class="grid3">
-
-          <!-- 1200x1200 -->
-          <div class="card">
-            <div class="cardTop">
-              <h3>Square • 1200×1200</h3>
-              <div class="chip" id="chip_1200x1200"><span class="dot"></span><span id="chipText_1200x1200">Not uploaded</span></div>
-            </div>
-
-            <div class="row" style="margin-top:12px">
-              <div style="flex:1">
-                <div class="label">Overlay PNG</div>
-                <button class="btn" id="btnOv_1200x1200">Choose overlay</button>
-                <div class="fileName" id="ovName_1200x1200">—</div>
-                <input class="hiddenInput" id="ov_1200_1200" type="file" accept="image/png"/>
-                <div class="fileName" id="meta_1200x1200"></div>
-              </div>
-            </div>
-
-            <div class="row">
-              <div style="flex:1">
-                <div class="label">Preview base image (optional)</div>
-                <button class="btn btnGhost" id="btnPv_1200x1200">Choose preview image</button>
-                <div class="fileName" id="pvName_1200x1200">—</div>
-                <input class="hiddenInput" id="pv_1200_1200" type="file" accept="image/*"/>
-              </div>
-            </div>
-
-            <div class="thumb">
-              <div class="cap">Preview</div>
-              <canvas id="cv_1200_1200" width="1200" height="1200"></canvas>
-            </div>
-          </div>
-
-          <!-- 1200x628 -->
-          <div class="card">
-            <div class="cardTop">
-              <h3>Landscape • 1200×628</h3>
-              <div class="chip" id="chip_1200x628"><span class="dot"></span><span id="chipText_1200x628">Not uploaded</span></div>
-            </div>
-
-            <div class="row" style="margin-top:12px">
-              <div style="flex:1">
-                <div class="label">Overlay PNG</div>
-                <button class="btn" id="btnOv_1200x628">Choose overlay</button>
-                <div class="fileName" id="ovName_1200x628">—</div>
-                <input class="hiddenInput" id="ov_1200_628" type="file" accept="image/png"/>
-                <div class="fileName" id="meta_1200x628"></div>
-              </div>
-            </div>
-
-            <div class="row">
-              <div style="flex:1">
-                <div class="label">Preview base image (optional)</div>
-                <button class="btn btnGhost" id="btnPv_1200x628">Choose preview image</button>
-                <div class="fileName" id="pvName_1200x628">—</div>
-                <input class="hiddenInput" id="pv_1200_628" type="file" accept="image/*"/>
-              </div>
-            </div>
-
-            <div class="thumb">
-              <div class="cap">Preview</div>
-              <canvas id="cv_1200_628" width="1200" height="628"></canvas>
-            </div>
-          </div>
-
-          <!-- 960x1200 -->
-          <div class="card">
-            <div class="cardTop">
-              <h3>Portrait • 960×1200</h3>
-              <div class="chip" id="chip_960x1200"><span class="dot"></span><span id="chipText_960x1200">Not uploaded</span></div>
-            </div>
-
-            <div class="row" style="margin-top:12px">
-              <div style="flex:1">
-                <div class="label">Overlay PNG</div>
-                <button class="btn" id="btnOv_960x1200">Choose overlay</button>
-                <div class="fileName" id="ovName_960x1200">—</div>
-                <input class="hiddenInput" id="ov_960_1200" type="file" accept="image/png"/>
-                <div class="fileName" id="meta_960x1200"></div>
-              </div>
-            </div>
-
-            <div class="row">
-              <div style="flex:1">
-                <div class="label">Preview base image (optional)</div>
-                <button class="btn btnGhost" id="btnPv_960x1200">Choose preview image</button>
-                <div class="fileName" id="pvName_960x1200">—</div>
-                <input class="hiddenInput" id="pv_960_1200" type="file" accept="image/*"/>
-              </div>
-            </div>
-
-            <div class="thumb">
-              <div class="cap">Preview</div>
-              <canvas id="cv_960_1200" width="960" height="1200"></canvas>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-
-    <!-- UPLOAD -->
-    <div class="panel hide" id="tab_upload">
-      <div class="head">
-        <div>
-          <h2>Upload images</h2>
-          <div class="hint">Upload mixed sizes — the right overlay is applied automatically.</div>
-        </div>
-        <div class="hint" id="uploadHint">0 images selected</div>
-      </div>
-      <div class="body">
-        <div class="drop" id="dropZone">
+    <div class="layout">
+      <!-- LEFT -->
+      <div class="panel">
+        <div class="head">
           <div>
-            <strong>Drop images here</strong>
-            <span>Or use the button. (100+ supported)</span>
+            <h2>Overlay templates</h2>
+            <div class="hint">Upload one PNG overlay per size (exact match). Preview is optional.</div>
           </div>
-          <div class="row" style="margin:0">
-            <button class="btn" id="btnImages">Choose images</button>
-            <input class="hiddenInput" id="images" type="file" accept="image/*" multiple/>
-            <select class="select" id="format">
-              <option value="image/png">Export PNG</option>
-              <option value="image/jpeg">Export JPG</option>
-            </select>
-          </div>
+          <div class="hint" id="topStatus">Waiting</div>
         </div>
 
-        <div class="stats">
-          <div class="stat"><div class="k">Total</div><div class="v" id="st_total">0</div></div>
-          <div class="stat"><div class="k">Processed</div><div class="v" id="st_ok">0</div></div>
-          <div class="stat"><div class="k">Unmatched</div><div class="v" id="st_bad">0</div></div>
-          <div class="stat"><div class="k">Progress</div><div class="v" id="st_prog">0%</div></div>
+        <div class="body">
+          <div class="grid3">
+            <!-- Square -->
+            <div class="card">
+              <div class="cardTop">
+                <h3>Square • 1200×1200</h3>
+                <div class="chip" id="chip_1200x1200"><span class="dot"></span><span id="chipText_1200x1200">Not uploaded</span></div>
+              </div>
+
+              <div class="label">Overlay PNG</div>
+              <button class="btn" id="btnOv_1200x1200">Choose overlay</button>
+              <div class="fileName" id="ovName_1200x1200">—</div>
+              <input class="hiddenInput" id="ov_1200_1200" type="file" accept="image/png"/>
+              <div class="fileName" id="meta_1200x1200"></div>
+
+              <div class="label">Preview image (optional)</div>
+              <button class="btn" id="btnPv_1200x1200">Choose preview</button>
+              <div class="fileName" id="pvName_1200x1200">—</div>
+              <input class="hiddenInput" id="pv_1200_1200" type="file" accept="image/*"/>
+
+              <div class="thumb">
+                <div class="cap">Preview</div>
+                <canvas id="cv_1200_1200" width="1200" height="1200"></canvas>
+              </div>
+            </div>
+
+            <!-- Landscape -->
+            <div class="card">
+              <div class="cardTop">
+                <h3>Landscape • 1200×628</h3>
+                <div class="chip" id="chip_1200x628"><span class="dot"></span><span id="chipText_1200x628">Not uploaded</span></div>
+              </div>
+
+              <div class="label">Overlay PNG</div>
+              <button class="btn" id="btnOv_1200x628">Choose overlay</button>
+              <div class="fileName" id="ovName_1200x628">—</div>
+              <input class="hiddenInput" id="ov_1200_628" type="file" accept="image/png"/>
+              <div class="fileName" id="meta_1200x628"></div>
+
+              <div class="label">Preview image (optional)</div>
+              <button class="btn" id="btnPv_1200x628">Choose preview</button>
+              <div class="fileName" id="pvName_1200x628">—</div>
+              <input class="hiddenInput" id="pv_1200_628" type="file" accept="image/*"/>
+
+              <div class="thumb">
+                <div class="cap">Preview</div>
+                <canvas id="cv_1200_628" width="1200" height="628"></canvas>
+              </div>
+            </div>
+
+            <!-- Portrait -->
+            <div class="card">
+              <div class="cardTop">
+                <h3>Portrait • 960×1200</h3>
+                <div class="chip" id="chip_960x1200"><span class="dot"></span><span id="chipText_960x1200">Not uploaded</span></div>
+              </div>
+
+              <div class="label">Overlay PNG</div>
+              <button class="btn" id="btnOv_960x1200">Choose overlay</button>
+              <div class="fileName" id="ovName_960x1200">—</div>
+              <input class="hiddenInput" id="ov_960_1200" type="file" accept="image/png"/>
+              <div class="fileName" id="meta_960x1200"></div>
+
+              <div class="label">Preview image (optional)</div>
+              <button class="btn" id="btnPv_960x1200">Choose preview</button>
+              <div class="fileName" id="pvName_960x1200">—</div>
+              <input class="hiddenInput" id="pv_960_1200" type="file" accept="image/*"/>
+
+              <div class="thumb">
+                <div class="cap">Preview</div>
+                <canvas id="cv_960_1200" width="960" height="1200"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div style="height:12px"></div>
+
+          <div class="drop" id="dropZone">
+            <div>
+              <strong>Upload images</strong>
+              <span>Drag & drop or choose files. Mixed sizes supported.</span>
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+              <button class="btn" style="width:auto" id="btnImages">Choose images</button>
+              <input class="hiddenInput" id="images" type="file" accept="image/*" multiple/>
+              <select class="select" id="format">
+                <option value="image/png">Export PNG</option>
+                <option value="image/jpeg">Export JPG</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="stats">
+            <div class="stat"><div class="k">Total</div><div class="v" id="st_total">0</div></div>
+            <div class="stat"><div class="k">Progress</div><div class="v" id="st_prog">0%</div></div>
+          </div>
+          <div class="progress"><div class="bar" id="bar"></div></div>
+
+          <div class="log" id="log"></div>
         </div>
-        <div class="progress"><div class="bar" id="bar"></div></div>
+      </div>
+
+      <!-- RIGHT -->
+      <div class="rightStack">
+        <div class="info">
+          <h4>Output</h4>
+          <p>Downloads a ZIP with folders: <b>1200x1200</b>, <b>1200x628</b>, <b>960x1200</b>, <b>unmatched</b>.</p>
+        </div>
+        <div class="info">
+          <h4>Tips</h4>
+          <p>If an overlay isn’t applied, it means the image size didn’t match exactly. Check “unmatched” folder.</p>
+        </div>
+
+        <div class="info">
+          <h4>Results</h4>
+          <div class="stats" style="margin-top:10px">
+            <div class="stat"><div class="k">Processed</div><div class="v" id="st_ok">0</div></div>
+            <div class="stat"><div class="k">Unmatched</div><div class="v" id="st_bad">0</div></div>
+          </div>
+        </div>
       </div>
     </div>
+  </div>
 
-    <!-- EXPORT -->
-    <div class="panel hide" id="tab_export">
-      <div class="head">
-        <div>
-          <h2>Export</h2>
-          <div class="hint">Downloads a ZIP with folders: 1200x1200, 1200x628, 960x1200, unmatched</div>
-        </div>
-        <button class="btn btnPrimary" id="runBtn" disabled>Download ZIP</button>
-      </div>
-      <div class="body">
-        <div class="log" id="log"></div>
+  <!-- Sticky bottom action bar -->
+  <div class="bottomBar">
+    <div class="bottomInner">
+      <div class="mini" id="bottomStatus">Upload overlays + images to enable download.</div>
+      <div class="cta">
+        <button class="btnPrimary" id="runBtn" disabled>Download ZIP</button>
       </div>
     </div>
-
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
@@ -455,13 +445,8 @@
 
     const els = {
       topStatus: document.getElementById("topStatus"),
+      bottomStatus: document.getElementById("bottomStatus"),
 
-      tabs: Array.from(document.querySelectorAll(".tab")),
-      tab_templates: document.getElementById("tab_templates"),
-      tab_upload: document.getElementById("tab_upload"),
-      tab_export: document.getElementById("tab_export"),
-
-      // overlay inputs
       ov: {
         "1200x1200": document.getElementById("ov_1200_1200"),
         "1200x628":  document.getElementById("ov_1200_628"),
@@ -503,7 +488,6 @@
         "960x1200":  document.getElementById("pvName_960x1200"),
       },
 
-      // buttons that trigger file inputs
       btnOv: {
         "1200x1200": document.getElementById("btnOv_1200x1200"),
         "1200x628":  document.getElementById("btnOv_1200x628"),
@@ -515,18 +499,14 @@
         "960x1200":  document.getElementById("btnPv_960x1200"),
       },
 
-      // upload
       dropZone: document.getElementById("dropZone"),
       btnImages: document.getElementById("btnImages"),
       images: document.getElementById("images"),
-      uploadHint: document.getElementById("uploadHint"),
       format: document.getElementById("format"),
 
-      // export
       runBtn: document.getElementById("runBtn"),
       log: document.getElementById("log"),
 
-      // stats
       st_total: document.getElementById("st_total"),
       st_ok: document.getElementById("st_ok"),
       st_bad: document.getElementById("st_bad"),
@@ -534,16 +514,7 @@
       bar: document.getElementById("bar"),
     };
 
-    const overlayBitmaps = new Map(); // key -> {bmp,w,h,file}
-
-    function setTab(name){
-      els.tabs.forEach(t => t.classList.toggle("active", t.dataset.tab===name));
-      els.tab_templates.classList.toggle("hide", name!=="templates");
-      els.tab_upload.classList.toggle("hide", name!=="upload");
-      els.tab_export.classList.toggle("hide", name!=="export");
-      window.scrollTo({top:0, behavior:"smooth"});
-    }
-    els.tabs.forEach(t => t.addEventListener("click", () => setTab(t.dataset.tab)));
+    const overlayBitmaps = new Map();
 
     function log(s){
       els.log.textContent += s + "\n";
@@ -558,18 +529,6 @@
       els.chipText[key].textContent = text;
     }
 
-    function updateTopStatus(){
-      const ready = TARGETS.every(t => overlayBitmaps.has(t.key));
-      els.topStatus.textContent = ready ? "Templates ready" : "Waiting";
-    }
-
-    function updateRunEnabled(){
-      const overlaysReady = TARGETS.every(t => overlayBitmaps.has(t.key));
-      const hasImages = els.images.files && els.images.files.length > 0;
-      els.runBtn.disabled = !(overlaysReady && hasImages);
-      updateTopStatus();
-    }
-
     function keyWH(w,h){ return `${w}x${h}`; }
 
     async function fileToBitmap(file){
@@ -578,10 +537,26 @@
       return await createImageBitmap(blob);
     }
 
+    function updateStatuses(){
+      const overlaysReady = TARGETS.every(t => overlayBitmaps.has(t.key));
+      const imgCount = els.images.files?.length || 0;
+      els.topStatus.textContent = overlaysReady ? "Templates ready" : "Waiting";
+      els.bottomStatus.textContent = overlaysReady
+        ? (imgCount ? `${imgCount} images ready • Download enabled` : "Upload images to enable download.")
+        : "Upload all 3 overlays to enable download.";
+    }
+
+    function updateRunEnabled(){
+      const overlaysReady = TARGETS.every(t => overlayBitmaps.has(t.key));
+      const hasImages = els.images.files && els.images.files.length > 0;
+      els.runBtn.disabled = !(overlaysReady && hasImages);
+      updateStatuses();
+    }
+
     async function loadOverlayFor(key){
       const f = els.ov[key].files?.[0];
-      els.meta[key].textContent = "";
       els.ovName[key].textContent = f ? f.name : "—";
+      els.meta[key].textContent = "";
 
       if (!f){
         overlayBitmaps.delete(key);
@@ -611,7 +586,6 @@
         els.meta[key].innerHTML = `<span style="color:rgba(239,68,68,.95);font-weight:900">Mismatch</span> • ${bmp.width}×${bmp.height} expected ${expected.w}×${expected.h}`;
       }
 
-      // refresh preview if base exists
       const base = els.pv[key].files?.[0];
       if (base) await renderPreview(key, base);
 
@@ -628,11 +602,11 @@
 
       if (baseBmp.width !== expected.w || baseBmp.height !== expected.h){
         ctx.fillStyle = "rgba(234,240,255,.92)";
-        ctx.font = "20px system-ui";
-        ctx.fillText(`Preview must be ${expected.w}×${expected.h}`, 18, 52);
-        ctx.font = "14px system-ui";
+        ctx.font = "18px system-ui";
+        ctx.fillText(`Preview must be ${expected.w}×${expected.h}`, 16, 46);
+        ctx.font = "13px system-ui";
         ctx.fillStyle = "rgba(234,240,255,.70)";
-        ctx.fillText(`Your image: ${baseBmp.width}×${baseBmp.height}`, 18, 80);
+        ctx.fillText(`Your image: ${baseBmp.width}×${baseBmp.height}`, 16, 70);
         return;
       }
 
@@ -642,10 +616,10 @@
       if (!ov) return;
       if (ov.w !== expected.w || ov.h !== expected.h) return;
 
-      ctx.drawImage(ov.bmp, 0, 0); // no resize
+      ctx.drawImage(ov.bmp, 0, 0);
     }
 
-    // hook custom buttons to hidden inputs
+    // connect buttons to inputs
     TARGETS.forEach(t => {
       setChip(t.key, null, "Not uploaded");
 
@@ -661,19 +635,15 @@
       });
     });
 
-    // upload images
+    // image upload
     els.btnImages.addEventListener("click", () => els.images.click());
-    function updateUploadStats(){
+    els.images.addEventListener("change", () => {
       const total = els.images.files?.length || 0;
-      els.uploadHint.textContent = `${total} images selected`;
       els.st_total.textContent = String(total);
       els.st_ok.textContent = "0";
       els.st_bad.textContent = "0";
       els.st_prog.textContent = "0%";
       els.bar.style.width = "0%";
-    }
-    els.images.addEventListener("change", () => {
-      updateUploadStats();
       updateRunEnabled();
     });
 
@@ -691,7 +661,13 @@
       [...existing, ...incoming].forEach(f => dt.items.add(f));
       els.images.files = dt.files;
 
-      updateUploadStats();
+      const total = els.images.files?.length || 0;
+      els.st_total.textContent = String(total);
+      els.st_ok.textContent = "0";
+      els.st_bad.textContent = "0";
+      els.st_prog.textContent = "0%";
+      els.bar.style.width = "0%";
+
       updateRunEnabled();
     });
 
@@ -710,7 +686,6 @@
       const mime = els.format.value;
 
       let ok=0, bad=0;
-
       log("Processing…");
 
       const zip = new JSZip();
@@ -720,7 +695,6 @@
 
       for (let i=0; i<files.length; i++){
         const f = files[i];
-
         const pct = Math.round((i / Math.max(1, files.length)) * 100);
         els.st_prog.textContent = pct + "%";
         els.bar.style.width = pct + "%";
@@ -758,6 +732,7 @@
           const outName = `${safeName(baseName)}__${k}.${ext}`;
 
           out[target.key].file(outName, outBuf);
+
           ok++; els.st_ok.textContent = String(ok);
 
         }catch(e){
@@ -781,32 +756,7 @@
       updateRunEnabled();
     });
 
-    // move user forward automatically when ready
-    function autoAdvance(){
-      const templatesReady = TARGETS.every(t => overlayBitmaps.has(t.key));
-      if (templatesReady) {
-        // if user still on templates, gently move them to upload
-        if (!document.querySelector('.tab.active')?.dataset?.tab || document.querySelector('.tab.active').dataset.tab === "templates") {
-          setTab("upload");
-        }
-      }
-    }
-    // hook autoAdvance after overlays change
-    TARGETS.forEach(t => els.ov[t.key].addEventListener("change", autoAdvance));
-
-    // export tab becomes useful once images exist
-    function maybeEnableExportTab(){
-      const hasImages = els.images.files && els.images.files.length > 0;
-      if (hasImages) setTab("export");
-    }
-    els.images.addEventListener("change", ()=> {
-      // if templates ready too, push to export
-      const templatesReady = TARGETS.every(t => overlayBitmaps.has(t.key));
-      if (templatesReady) maybeEnableExportTab();
-    });
-
     updateRunEnabled();
-    updateUploadStats();
   </script>
 </body>
 </html>
