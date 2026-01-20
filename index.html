@@ -1,209 +1,343 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Bulk Overlay Tool (No Resize)</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Bulk Overlay Tool (3 Sizes • No Resize)</title>
   <style>
-    body{font-family:system-ui,Arial;margin:20px;max-width:980px}
-    .row{display:flex;gap:16px;flex-wrap:wrap}
-    .card{border:1px solid #ddd;border-radius:10px;padding:14px;flex:1;min-width:280px}
-    label{font-weight:600;display:block;margin:10px 0 6px}
-    input[type="file"]{width:100%}
-    button{padding:10px 14px;border-radius:10px;border:1px solid #222;background:#111;color:#fff;cursor:pointer}
-    button:disabled{opacity:.5;cursor:not-allowed}
+    body{font-family:system-ui,Arial;margin:18px;max-width:1150px}
+    h2{margin:0 0 8px}
     .small{font-size:12px;color:#555}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .card{border:1px solid #ddd;border-radius:12px;padding:12px}
+    label{font-weight:650;display:block;margin:10px 0 6px}
+    input[type=file]{width:100%}
+    .meta{font-size:12px;margin-top:8px}
+    .ok{color:#0a7a2f;font-weight:700}
+    .bad{color:#b00020;font-weight:700}
+    .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:14px}
+    button{padding:10px 14px;border-radius:10px;border:1px solid #111;background:#111;color:#fff;cursor:pointer}
+    button:disabled{opacity:.5;cursor:not-allowed}
+    canvas{width:100%;height:auto;border-radius:10px;border:1px solid #eee;background:#fafafa}
     .log{white-space:pre-wrap;background:#0b1020;color:#d7e3ff;padding:12px;border-radius:10px;min-height:140px}
     .pill{display:inline-block;padding:4px 10px;border-radius:999px;background:#f2f2f2;margin-right:6px}
+    .warn{background:#fff7ed;border:1px solid #fed7aa;color:#7c2d12;padding:10px;border-radius:10px;margin:10px 0}
   </style>
 </head>
 <body>
-  <h2>Bulk Overlay Tool (No Resize)</h2>
-  <p class="small">
-    Rule: Overlay PNG size must EXACTLY match the base image size. Tool only pastes overlay (no crop/resize).
-  </p>
+  <h2>Bulk Overlay Tool (3 Sizes • No Resize)</h2>
+  <div class="small">Strict rule: overlay PNG must exactly match the target size. No resizing, no cropping.</div>
 
-  <div class="row">
-    <div class="card">
-      <h3>1) Upload Overlays (3 PNGs)</h3>
-      <label>Overlay PNGs (select 3)</label>
-      <input id="overlays" type="file" accept="image/png" multiple />
-      <div id="overlayInfo" class="small" style="margin-top:10px;"></div>
-      <div class="small" style="margin-top:10px;">
-        Tip: If your three sizes are 1200×628, 1200×1200, 960×1200 then your overlays must be exactly those.
-      </div>
-    </div>
-
-    <div class="card">
-      <h3>2) Upload Images (100+)</h3>
-      <label>Base images (JPG/PNG)</label>
-      <input id="images" type="file" accept="image/*" multiple />
-      <label>Output format</label>
-      <select id="format">
-        <option value="image/jpeg">JPG</option>
-        <option value="image/png">PNG</option>
-      </select>
-      <label>Placement</label>
-      <select id="placement">
-        <option value="topleft">Top-left</option>
-        <option value="center">Center</option>
-      </select>
-      <div style="margin-top:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-        <button id="runBtn" disabled>Process & Download ZIP</button>
-        <span id="stats" class="small"></span>
-      </div>
+  <div class="warn">
+    Your sizes are locked to:
+    <span class="pill">1200×1200</span>
+    <span class="pill">1200×628</span>
+    <span class="pill">960×1200</span>
+    <div class="small" style="margin-top:6px;">
+      If you actually meant 1200×268 (not 628), tell me — I’ll change it. Most PMAX landscape is 1200×628.
     </div>
   </div>
 
-  <h3 style="margin-top:22px;">Log</h3>
+  <div class="grid">
+    <!-- 1200x1200 -->
+    <div class="card">
+      <h3 style="margin:0 0 6px;">1200×1200</h3>
+      <label>Overlay PNG</label>
+      <input id="ov_1200_1200" type="file" accept="image/png"/>
+      <div id="meta_1200_1200" class="meta small"></div>
+
+      <label>Preview base image (optional)</label>
+      <input id="pv_1200_1200" type="file" accept="image/*"/>
+      <div class="small">Preview shows: base + overlay</div>
+      <canvas id="cv_1200_1200" width="1200" height="1200"></canvas>
+    </div>
+
+    <!-- 1200x628 -->
+    <div class="card">
+      <h3 style="margin:0 0 6px;">1200×628</h3>
+      <label>Overlay PNG</label>
+      <input id="ov_1200_628" type="file" accept="image/png"/>
+      <div id="meta_1200_628" class="meta small"></div>
+
+      <label>Preview base image (optional)</label>
+      <input id="pv_1200_628" type="file" accept="image/*"/>
+      <div class="small">Preview shows: base + overlay</div>
+      <canvas id="cv_1200_628" width="1200" height="628"></canvas>
+    </div>
+
+    <!-- 960x1200 -->
+    <div class="card">
+      <h3 style="margin:0 0 6px;">960×1200</h3>
+      <label>Overlay PNG</label>
+      <input id="ov_960_1200" type="file" accept="image/png"/>
+      <div id="meta_960_1200" class="meta small"></div>
+
+      <label>Preview base image (optional)</label>
+      <input id="pv_960_1200" type="file" accept="image/*"/>
+      <div class="small">Preview shows: base + overlay</div>
+      <canvas id="cv_960_1200" width="960" height="1200"></canvas>
+    </div>
+  </div>
+
+  <div class="row">
+    <div style="flex:1;min-width:320px">
+      <label>Upload ALL images (mixed sizes, 100+)</label>
+      <input id="images" type="file" accept="image/*" multiple/>
+      <div class="small">The tool auto-sorts by exact width×height.</div>
+    </div>
+
+    <div>
+      <label>Output format</label>
+      <select id="format">
+        <option value="image/png">PNG</option>
+        <option value="image/jpeg">JPG</option>
+      </select>
+    </div>
+
+    <div>
+      <label>&nbsp;</label>
+      <button id="runBtn" disabled>Process & Download ZIP</button>
+    </div>
+
+    <div class="small" id="stats"></div>
+  </div>
+
+  <h3 style="margin-top:18px;">Log</h3>
   <div id="log" class="log"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
   <script>
-    const overlaysInput = document.getElementById('overlays');
-    const imagesInput = document.getElementById('images');
-    const runBtn = document.getElementById('runBtn');
-    const logEl = document.getElementById('log');
-    const overlayInfo = document.getElementById('overlayInfo');
-    const statsEl = document.getElementById('stats');
-    const formatEl = document.getElementById('format');
-    const placementEl = document.getElementById('placement');
+    const TARGETS = [
+      { key:"1200x1200", w:1200, h:1200 },
+      { key:"1200x628",  w:1200, h:628  },
+      { key:"960x1200",  w:960,  h:1200 }
+    ];
 
-    const overlayMap = new Map(); // key "WxH" -> {file, bitmap, w, h}
+    const els = {
+      overlays: {
+        "1200x1200": document.getElementById("ov_1200_1200"),
+        "1200x628":  document.getElementById("ov_1200_628"),
+        "960x1200":  document.getElementById("ov_960_1200"),
+      },
+      meta: {
+        "1200x1200": document.getElementById("meta_1200_1200"),
+        "1200x628":  document.getElementById("meta_1200_628"),
+        "960x1200":  document.getElementById("meta_960_1200"),
+      },
+      previews: {
+        "1200x1200": document.getElementById("pv_1200_1200"),
+        "1200x628":  document.getElementById("pv_1200_628"),
+        "960x1200":  document.getElementById("pv_960_1200"),
+      },
+      canvas: {
+        "1200x1200": document.getElementById("cv_1200_1200"),
+        "1200x628":  document.getElementById("cv_1200_628"),
+        "960x1200":  document.getElementById("cv_960_1200"),
+      },
+      images: document.getElementById("images"),
+      runBtn: document.getElementById("runBtn"),
+      log: document.getElementById("log"),
+      stats: document.getElementById("stats"),
+      format: document.getElementById("format"),
+    };
+
+    const overlayBitmaps = new Map(); // key -> {bmp,w,h,file}
 
     function log(s){
-      logEl.textContent += s + "\n";
-      logEl.scrollTop = logEl.scrollHeight;
-    }
-
-    async function fileToBitmap(file){
-      const buf = await file.arrayBuffer();
-      const blob = new Blob([buf], {type: file.type});
-      return await createImageBitmap(blob);
+      els.log.textContent += s + "\n";
+      els.log.scrollTop = els.log.scrollHeight;
     }
 
     function keyWH(w,h){ return `${w}x${h}`; }
 
-    async function loadOverlays(){
-      overlayMap.clear();
-      overlayInfo.innerHTML = "";
-      const files = Array.from(overlaysInput.files || []);
-      if (!files.length) return;
-
-      logEl.textContent = "";
-      log("Loading overlays...");
-      for (const f of files){
-        if (!f.type.includes("png")) {
-          log(`Skipping non-PNG overlay: ${f.name}`);
-          continue;
-        }
-        const bmp = await fileToBitmap(f);
-        const k = keyWH(bmp.width, bmp.height);
-        overlayMap.set(k, { file:f, bitmap:bmp, w:bmp.width, h:bmp.height });
-        log(`Overlay loaded: ${f.name} => ${k}`);
-      }
-
-      overlayInfo.innerHTML = Array.from(overlayMap.values()).map(o =>
-        `<div class="pill">${o.file.name} • ${o.w}×${o.h}</div>`
-      ).join("");
-
-      updateRunEnabled();
+    async function fileToBitmap(file){
+      const buf = await file.arrayBuffer();
+      const blob = new Blob([buf], {type:file.type});
+      return await createImageBitmap(blob);
     }
 
     function updateRunEnabled(){
-      const hasImages = (imagesInput.files && imagesInput.files.length > 0);
-      const hasOverlays = overlayMap.size > 0;
-      runBtn.disabled = !(hasImages && hasOverlays);
+      const needOverlays = TARGETS.every(t => overlayBitmaps.has(t.key));
+      const hasImages = els.images.files && els.images.files.length > 0;
+      els.runBtn.disabled = !(needOverlays && hasImages);
     }
 
-    overlaysInput.addEventListener('change', loadOverlays);
-    imagesInput.addEventListener('change', updateRunEnabled);
+    async function loadOverlayFor(targetKey){
+      els.meta[targetKey].textContent = "";
+      const f = els.overlays[targetKey].files?.[0];
+      if (!f) { overlayBitmaps.delete(targetKey); updateRunEnabled(); return; }
 
-    async function bitmapToBlob(canvas, mime){
-      return await new Promise(resolve => canvas.toBlob(resolve, mime, mime==="image/jpeg"?0.92:undefined));
+      if (!f.type.includes("png")){
+        els.meta[targetKey].innerHTML = `<span class="bad">Overlay must be PNG.</span>`;
+        overlayBitmaps.delete(targetKey);
+        updateRunEnabled();
+        return;
+      }
+
+      const bmp = await fileToBitmap(f);
+      const expected = TARGETS.find(t => t.key===targetKey);
+      const ok = (bmp.width === expected.w && bmp.height === expected.h);
+
+      overlayBitmaps.set(targetKey, { bmp, w:bmp.width, h:bmp.height, file:f });
+
+      els.meta[targetKey].innerHTML =
+        ok
+          ? `<span class="ok">OK</span> Overlay: ${bmp.width}×${bmp.height}`
+          : `<span class="bad">Mismatch</span> Overlay is ${bmp.width}×${bmp.height} but expected ${expected.w}×${expected.h}. Overlay will NOT apply.`;
+
+      updateRunEnabled();
+      // refresh preview if base exists
+      const baseFile = els.previews[targetKey].files?.[0];
+      if (baseFile) await renderPreview(targetKey, baseFile);
     }
+
+    async function renderPreview(targetKey, baseFile){
+      const cv = els.canvas[targetKey];
+      const ctx = cv.getContext("2d");
+      ctx.clearRect(0,0,cv.width,cv.height);
+
+      const baseBmp = await fileToBitmap(baseFile);
+      const expected = TARGETS.find(t => t.key===targetKey);
+
+      // Draw base only if its size matches the canvas (strict preview)
+      if (baseBmp.width !== expected.w || baseBmp.height !== expected.h) {
+        ctx.fillStyle = "#111";
+        ctx.font = "20px system-ui";
+        ctx.fillText(`Preview base must be ${expected.w}×${expected.h}`, 24, 60);
+        ctx.fillText(`Your image is ${baseBmp.width}×${baseBmp.height}`, 24, 92);
+        return;
+      }
+
+      ctx.drawImage(baseBmp, 0, 0);
+
+      const ov = overlayBitmaps.get(targetKey);
+      if (!ov) {
+        ctx.fillStyle = "rgba(0,0,0,.55)";
+        ctx.fillRect(0,0,cv.width,40);
+        ctx.fillStyle = "#fff";
+        ctx.font = "14px system-ui";
+        ctx.fillText("Upload overlay PNG to see overlay preview.", 12, 26);
+        return;
+      }
+
+      const ok = (ov.w === expected.w && ov.h === expected.h);
+      if (!ok) {
+        ctx.fillStyle = "rgba(176,0,32,.85)";
+        ctx.fillRect(0,0,cv.width,44);
+        ctx.fillStyle = "#fff";
+        ctx.font = "14px system-ui";
+        ctx.fillText("Overlay size mismatch — not applied in preview.", 12, 28);
+        return;
+      }
+
+      // No resize, just paste at 0,0
+      ctx.drawImage(ov.bmp, 0, 0);
+    }
+
+    // Wire overlay inputs
+    TARGETS.forEach(t => {
+      els.overlays[t.key].addEventListener("change", () => loadOverlayFor(t.key));
+      els.previews[t.key].addEventListener("change", async () => {
+        const f = els.previews[t.key].files?.[0];
+        if (!f) return;
+        await renderPreview(t.key, f);
+      });
+    });
+
+    els.images.addEventListener("change", updateRunEnabled);
 
     function safeName(name){
       return name.replace(/[^\w\-\.]+/g, "_");
     }
 
-    runBtn.addEventListener('click', async () => {
-      runBtn.disabled = true;
-      const files = Array.from(imagesInput.files || []);
-      const mime = formatEl.value;
-      const placement = placementEl.value;
+    async function canvasToBlob(canvas, mime){
+      return await new Promise(res => canvas.toBlob(res, mime, mime==="image/jpeg"?0.92:undefined));
+    }
 
-      log("Starting processing...");
-      statsEl.textContent = "";
+    els.runBtn.addEventListener("click", async () => {
+      els.runBtn.disabled = true;
+      els.log.textContent = "";
+      const files = Array.from(els.images.files || []);
+      const mime = els.format.value;
+
+      log("Starting...");
       const zip = new JSZip();
-      const matchedFolder = zip.folder("matched");
-      const unmatchedFolder = zip.folder("unmatched");
+      const unmatched = zip.folder("unmatched");
+
+      // folders per target
+      const outFolders = {};
+      TARGETS.forEach(t => outFolders[t.key] = zip.folder(t.key));
 
       let ok=0, bad=0;
 
-      // Process sequentially to avoid RAM spikes
       for (let i=0; i<files.length; i++){
         const f = files[i];
         try{
-          const baseBmp = await fileToBitmap(f);
-          const k = keyWH(baseBmp.width, baseBmp.height);
-          const overlay = overlayMap.get(k);
+          const bmp = await fileToBitmap(f);
+          const k = keyWH(bmp.width, bmp.height);
 
-          if (!overlay){
-            // Put original into unmatched (optional)
-            const origBuf = await f.arrayBuffer();
-            unmatchedFolder.file(`${k}/${safeName(f.name)}`, origBuf);
+          const target = TARGETS.find(t => t.key === k);
+          if (!target) {
+            // keep original
+            unmatched.folder(k).file(safeName(f.name), await f.arrayBuffer());
             bad++;
-            log(`[${i+1}/${files.length}] UNMATCHED ${f.name} (${k})`);
-            statsEl.textContent = `Matched: ${ok} | Unmatched: ${bad}`;
+            log(`[${i+1}/${files.length}] UNMATCHED size ${k} : ${f.name}`);
+            els.stats.textContent = `Matched: ${ok} | Unmatched: ${bad}`;
             continue;
           }
 
-          const canvas = document.createElement('canvas');
-          canvas.width = baseBmp.width;
-          canvas.height = baseBmp.height;
-          const ctx = canvas.getContext('2d');
+          const ov = overlayBitmaps.get(target.key);
+          const expected = target;
 
-          // draw base
-          ctx.drawImage(baseBmp, 0, 0);
-
-          // draw overlay (no resize)
-          let ox = 0, oy = 0;
-          if (placement === "center") {
-            ox = Math.floor((baseBmp.width - overlay.w) / 2);
-            oy = Math.floor((baseBmp.height - overlay.h) / 2);
+          // Overlay must exist and must match expected exactly
+          if (!ov || ov.w !== expected.w || ov.h !== expected.h) {
+            unmatched.folder(k).file(safeName(f.name), await f.arrayBuffer());
+            bad++;
+            log(`[${i+1}/${files.length}] NO OVERLAY (or mismatch) for ${k}: ${f.name}`);
+            els.stats.textContent = `Matched: ${ok} | Unmatched: ${bad}`;
+            continue;
           }
-          ctx.drawImage(overlay.bitmap, ox, oy);
 
-          const outBlob = await bitmapToBlob(canvas, mime);
+          // Composite via canvas (no resize)
+          const canvas = document.createElement("canvas");
+          canvas.width = bmp.width;
+          canvas.height = bmp.height;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(bmp, 0, 0);
+          ctx.drawImage(ov.bmp, 0, 0);
+
+          const outBlob = await canvasToBlob(canvas, mime);
           const outBuf = await outBlob.arrayBuffer();
 
-          const ext = (mime === "image/png") ? "png" : "jpg";
+          const ext = (mime==="image/png") ? "png" : "jpg";
           const baseName = f.name.replace(/\.[^.]+$/, "");
           const outName = `${safeName(baseName)}__${k}.${ext}`;
 
-          matchedFolder.file(`${k}/${outName}`, outBuf);
+          outFolders[target.key].file(outName, outBuf);
           ok++;
-          log(`[${i+1}/${files.length}] OK ${f.name} (${k})`);
-          statsEl.textContent = `Matched: ${ok} | Unmatched: ${bad}`;
-        } catch (e){
+          log(`[${i+1}/${files.length}] OK ${k}: ${f.name}`);
+          els.stats.textContent = `Matched: ${ok} | Unmatched: ${bad}`;
+        } catch(e){
           bad++;
-          log(`[${i+1}/${files.length}] ERROR ${f.name} (${e?.message || e})`);
-          statsEl.textContent = `Matched: ${ok} | Unmatched: ${bad}`;
+          log(`[${i+1}/${files.length}] ERROR ${f.name}: ${e?.message||e}`);
+          els.stats.textContent = `Matched: ${ok} | Unmatched: ${bad}`;
         }
       }
 
-      log("Zipping...");
+      log("Creating ZIP...");
       const zipBlob = await zip.generateAsync({type:"blob"});
-      const a = document.createElement('a');
+
+      const a = document.createElement("a");
       a.href = URL.createObjectURL(zipBlob);
-      a.download = `bulk_overlay_output.zip`;
+      a.download = "bulk_overlay_output.zip";
       a.click();
       URL.revokeObjectURL(a.href);
 
       log("Done.");
-      runBtn.disabled = false;
+      els.runBtn.disabled = false;
     });
+
   </script>
 </body>
 </html>
+
