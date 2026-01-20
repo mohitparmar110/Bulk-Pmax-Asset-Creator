@@ -3,31 +3,31 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>OverlayForge — Bulk Overlay Tool</title>
-  <meta name="description" content="OverlayForge applies the right overlay template to hundreds of images based on size — no resizing, just perfect layering." />
+  <title>OverlayForge</title>
+  <meta name="description" content="Apply overlay templates to hundreds of images by size — clean, fast, and pixel-perfect." />
 
   <style>
     :root{
-      --bg0:#070A12;
-      --bg1:#0A1020;
-      --panel:rgba(255,255,255,.06);
-      --panel2:rgba(255,255,255,.04);
+      --bg:#0b0f18;
+      --panel:#0f1626;
+      --card:#111b2f;
       --line:rgba(255,255,255,.10);
       --line2:rgba(255,255,255,.06);
+      --text:#eaf0ff;
+      --muted:rgba(234,240,255,.72);
 
-      --text:#ECF2FF;
-      --muted:rgba(236,242,255,.70);
+      --brand:#7c3aed;
+      --brand2:#a78bfa;
 
-      --brand:#7C3AED;
-      --brand2:#A78BFA;
-      --ok:#22C55E;
-      --bad:#EF4444;
-      --warn:#F59E0B;
+      --ok:#22c55e;
+      --bad:#ef4444;
+      --warn:#f59e0b;
 
-      --r:20px;
-      --r2:16px;
-      --shadow: 0 22px 60px rgba(0,0,0,.45);
-      --shadow2: 0 14px 40px rgba(0,0,0,.32);
+      --r:18px;
+      --r2:14px;
+
+      --shadow: 0 18px 60px rgba(0,0,0,.45);
+      --shadow2: 0 10px 30px rgba(0,0,0,.28);
     }
 
     *{box-sizing:border-box}
@@ -37,280 +37,196 @@
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
       color:var(--text);
       background:
-        radial-gradient(1000px 700px at 15% 10%, rgba(124,58,237,.32), transparent 60%),
-        radial-gradient(900px 600px at 85% 20%, rgba(167,139,250,.18), transparent 60%),
-        linear-gradient(180deg, var(--bg0), var(--bg1));
-      overflow-x:hidden;
+        radial-gradient(900px 600px at 20% 0%, rgba(124,58,237,.22), transparent 60%),
+        radial-gradient(900px 600px at 90% 10%, rgba(167,139,250,.14), transparent 60%),
+        linear-gradient(180deg, #070a12, var(--bg));
     }
 
-    /* subtle animated glow */
-    .bgGlow{
-      position:fixed; inset:-200px;
-      background:
-        radial-gradient(600px 480px at 20% 20%, rgba(124,58,237,.18), transparent 60%),
-        radial-gradient(520px 420px at 80% 30%, rgba(167,139,250,.12), transparent 60%),
-        radial-gradient(560px 450px at 50% 90%, rgba(124,58,237,.10), transparent 60%);
-      filter: blur(8px);
-      animation: floatGlow 10s ease-in-out infinite alternate;
-      pointer-events:none;
-      opacity:.85;
-    }
-    @keyframes floatGlow{
-      from{ transform: translate3d(0,0,0) scale(1); }
-      to{ transform: translate3d(0,-18px,0) scale(1.02); }
-    }
-
-    .wrap{max-width:1200px;margin:0 auto;padding:18px 18px 28px}
+    .wrap{max-width:1040px;margin:0 auto;padding:22px 18px 40px}
     .top{
       display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
       padding:14px 16px;
       border:1px solid var(--line);
-      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
       border-radius: var(--r);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
       box-shadow: var(--shadow2);
       backdrop-filter: blur(10px);
     }
-
     .brand{
       display:flex;align-items:center;gap:12px;
-      transform: translateZ(0);
-      animation: popIn .55s ease both;
     }
-    @keyframes popIn{
-      from{ opacity:0; transform: translateY(8px); }
-      to{ opacity:1; transform: translateY(0); }
-    }
-
-    .mark{
-      width:42px;height:42px;border-radius:16px;
+    .logo{
+      width:40px;height:40px;border-radius:14px;
       background: linear-gradient(135deg, var(--brand), var(--brand2));
-      position:relative;
-      box-shadow: 0 18px 40px rgba(124,58,237,.30);
-      overflow:hidden;
+      box-shadow: 0 14px 30px rgba(124,58,237,.25);
     }
-    .mark:before{
-      content:"";
-      position:absolute; inset:-40%;
-      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.35), transparent 40%);
-      transform: rotate(25deg);
-      animation: shimmer 2.6s ease-in-out infinite;
-    }
-    @keyframes shimmer{
-      0%{ transform: translateX(-10%) rotate(25deg); opacity:.5; }
-      50%{ transform: translateX(10%) rotate(25deg); opacity:.9; }
-      100%{ transform: translateX(-6%) rotate(25deg); opacity:.55; }
-    }
-
-    .brandText .name{font-weight:900;letter-spacing:.3px;font-size:15px;margin:0}
-    .brandText .tag{margin:2px 0 0; font-size:12px; color:var(--muted)}
-
-    .sizes{
-      display:flex;gap:8px;flex-wrap:wrap;align-items:center;
-      animation: popIn .55s .08s ease both;
-    }
+    .brand h1{margin:0;font-size:16px;letter-spacing:.2px}
+    .brand p{margin:2px 0 0;font-size:12px;color:var(--muted)}
+    .sizes{display:flex;gap:8px;flex-wrap:wrap}
     .pill{
       border:1px solid var(--line);
-      background: rgba(255,255,255,.04);
+      background: rgba(255,255,255,.03);
       border-radius: 999px;
-      padding:8px 10px;
-      font-size:12px;
-      color:var(--muted);
+      padding:7px 10px;
+      font-size:12px;color:var(--muted);
       display:inline-flex;gap:8px;align-items:center;
-      transition: transform .15s ease, background .15s ease, border-color .15s ease;
     }
-    .pill:hover{transform: translateY(-1px); background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.16)}
     .pill b{color:var(--text)}
 
-    .grid{
-      margin-top:16px;
-      display:grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap:16px;
+    .tabs{
+      margin-top:14px;
+      display:flex;gap:8px;flex-wrap:wrap;
     }
-    @media (max-width: 980px){
-      .grid{grid-template-columns:1fr}
+    .tab{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      color:var(--muted);
+      padding:10px 12px;
+      border-radius: 999px;
+      cursor:pointer;
+      font-weight:750;
+      font-size:12px;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+      user-select:none;
+    }
+    .tab:hover{transform: translateY(-1px); background: rgba(255,255,255,.05)}
+    .tab.active{
+      color:var(--text);
+      border-color: rgba(167,139,250,.35);
+      background: linear-gradient(135deg, rgba(124,58,237,.30), rgba(167,139,250,.14));
     }
 
     .panel{
+      margin-top:12px;
       border:1px solid var(--line);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
       border-radius: var(--r);
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
       box-shadow: var(--shadow);
       overflow:hidden;
       backdrop-filter: blur(10px);
-      animation: liftIn .6s ease both;
-    }
-    @keyframes liftIn{
-      from{ opacity:0; transform: translateY(10px); }
-      to{ opacity:1; transform: translateY(0); }
     }
     .head{
       padding:14px 16px;
       border-bottom:1px solid var(--line2);
-      display:flex;align-items:flex-end;justify-content:space-between;gap:10px;flex-wrap:wrap;
+      display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;
       background: rgba(255,255,255,.02);
     }
     .head h2{margin:0;font-size:14px}
-    .head .sub{margin:3px 0 0;font-size:12px;color:var(--muted)}
+    .head .hint{font-size:12px;color:var(--muted)}
     .body{padding:16px}
 
-    .cards{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:12px;
+    .grid3{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:12px;
     }
-    @media (max-width: 980px){
-      .cards{grid-template-columns:1fr}
-    }
+    @media (max-width: 980px){ .grid3{grid-template-columns:1fr} }
 
     .card{
       border:1px solid var(--line);
       background: rgba(255,255,255,.03);
-      border-radius: var(--r2);
+      border-radius: var(--r);
       padding:12px;
-      box-shadow: 0 10px 24px rgba(0,0,0,.25);
-      position:relative;
-      overflow:hidden;
-      transform: translateZ(0);
-      transition: transform .16s ease, border-color .16s ease, background .16s ease;
+      box-shadow: 0 10px 22px rgba(0,0,0,.22);
     }
-    .card:hover{
-      transform: translateY(-2px);
-      border-color: rgba(167,139,250,.28);
-      background: rgba(255,255,255,.04);
-    }
-    .card:before{
-      content:"";
-      position:absolute; inset:-40%;
-      background: radial-gradient(closest-side at 30% 30%, rgba(124,58,237,.16), transparent 65%);
-      opacity:.0;
-      transition: opacity .18s ease;
-      pointer-events:none;
-    }
-    .card:hover:before{opacity:1}
-
-    .cardTop{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
-    .cardTop h3{margin:0;font-size:13px;letter-spacing:.2px}
+    .cardTop{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+    .cardTop h3{margin:0;font-size:13px}
     .chip{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:6px 10px;border-radius:999px;
       border:1px solid var(--line);
-      background: rgba(255,255,255,.03);
-      border-radius: 999px;
-      padding:6px 10px;
-      font-size:11px;
-      color:var(--muted);
-      display:inline-flex;align-items:center;gap:6px;
-      transition: transform .15s ease;
+      background: rgba(255,255,255,.02);
+      font-size:11px;color:var(--muted);
       user-select:none;
       white-space:nowrap;
     }
-    .chip i{
-      width:8px;height:8px;border-radius:999px;display:inline-block;
-      background: var(--warn);
-      box-shadow: 0 0 0 3px rgba(245,158,11,.14);
-    }
-    .chip.ok{border-color: rgba(34,197,94,.35); color: rgba(34,197,94,.95); background: rgba(34,197,94,.08)}
-    .chip.ok i{background: var(--ok); box-shadow: 0 0 0 3px rgba(34,197,94,.14)}
-    .chip.bad{border-color: rgba(239,68,68,.35); color: rgba(239,68,68,.95); background: rgba(239,68,68,.08)}
-    .chip.bad i{background: var(--bad); box-shadow: 0 0 0 3px rgba(239,68,68,.14)}
+    .dot{width:8px;height:8px;border-radius:999px;background:var(--warn); box-shadow:0 0 0 3px rgba(245,158,11,.14)}
+    .chip.ok{border-color:rgba(34,197,94,.35); color:rgba(34,197,94,.95); background:rgba(34,197,94,.08)}
+    .chip.ok .dot{background:var(--ok); box-shadow:0 0 0 3px rgba(34,197,94,.14)}
+    .chip.bad{border-color:rgba(239,68,68,.35); color:rgba(239,68,68,.95); background:rgba(239,68,68,.08)}
+    .chip.bad .dot{background:var(--bad); box-shadow:0 0 0 3px rgba(239,68,68,.14)}
 
-    .field{margin-top:10px}
+    .row{margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
     .label{font-size:12px;color:var(--muted);margin-bottom:6px}
-    .input{
-      width:100%;
-      border-radius: 14px;
-      border:1px solid var(--line);
-      background: rgba(10,16,32,.65);
-      color: var(--text);
-      padding:10px 12px;
-      outline:none;
-      transition: border-color .15s ease, background .15s ease;
-    }
-    .input:focus{border-color: rgba(167,139,250,.45); background: rgba(10,16,32,.78)}
-
-    .meta{font-size:12px;color:var(--muted);margin-top:8px;min-height:16px}
-    .meta b{color:var(--text)}
-    .meta .good{color: rgba(34,197,94,.95); font-weight:800}
-    .meta .bad{color: rgba(239,68,68,.95); font-weight:800}
-
-    .preview{
-      margin-top:10px;
-      border:1px solid var(--line);
-      border-radius: 16px;
-      overflow:hidden;
-      background: rgba(0,0,0,.25);
-      position:relative;
-    }
-    .preview .cap{
-      position:absolute;left:10px;top:10px;
-      font-size:11px;color:rgba(236,242,255,.85);
-      background: rgba(0,0,0,.35);
-      border:1px solid rgba(255,255,255,.10);
-      padding:6px 8px;border-radius:999px;
-      backdrop-filter: blur(6px);
-    }
-    canvas{width:100%;height:auto;display:block}
-
-    .drop{
-      margin-top:12px;
-      border:1px dashed rgba(167,139,250,.60);
-      border-radius: var(--r);
-      background: rgba(124,58,237,.08);
-      padding:14px;
-      display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
-      transition: transform .16s ease, background .16s ease, border-color .16s ease;
-    }
-    .drop.drag{
-      transform: translateY(-2px);
-      background: rgba(124,58,237,.14);
-      border-color: rgba(167,139,250,.85);
-    }
-    .drop strong{font-size:13px}
-    .drop .hint{font-size:12px;color:var(--muted);margin-top:2px}
-    .dropRight{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-
     .btn{
       border:1px solid rgba(255,255,255,.12);
       background: rgba(255,255,255,.06);
-      color: var(--text);
+      color:var(--text);
+      padding:10px 12px;
       border-radius: 14px;
-      padding:10px 14px;
       cursor:pointer;
       font-weight:850;
-      letter-spacing:.2px;
-      transition: transform .12s ease, background .12s ease, border-color .12s ease, filter .12s ease;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
       user-select:none;
     }
     .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.08)}
-    .btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+    .btn:disabled{opacity:.55;cursor:not-allowed;transform:none}
     .btnPrimary{
       background: linear-gradient(135deg, var(--brand), var(--brand2));
       border-color: rgba(124,58,237,.55);
-      box-shadow: 0 16px 34px rgba(124,58,237,.24);
+      box-shadow: 0 12px 28px rgba(124,58,237,.20);
     }
-    .btnPrimary:hover{filter: brightness(1.05)}
-    .btnGhost{
+    .btnGhost{background: rgba(255,255,255,.04)}
+
+    .fileName{
+      font-size:12px;color:var(--muted);
+      max-width:100%;
+      overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+    }
+
+    .hiddenInput{display:none}
+
+    .thumb{
+      margin-top:10px;
+      border:1px solid var(--line);
+      border-radius: var(--r2);
+      background: rgba(0,0,0,.22);
+      overflow:hidden;
+      position:relative;
+      min-height:120px;
+    }
+    .thumb canvas{width:100%;height:auto;display:block}
+    .thumb .cap{
+      position:absolute;top:10px;left:10px;
+      font-size:11px;color:rgba(234,240,255,.88);
+      padding:6px 10px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.30);
+      backdrop-filter: blur(6px);
+    }
+
+    .drop{
+      border:1px dashed rgba(167,139,250,.60);
+      background: rgba(124,58,237,.08);
+      border-radius: var(--r);
+      padding:16px;
+      display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;align-items:center;
+      transition: background .12s ease, border-color .12s ease, transform .12s ease;
+    }
+    .drop.drag{transform: translateY(-2px); background: rgba(124,58,237,.14); border-color: rgba(167,139,250,.85);}
+    .drop strong{display:block;font-size:13px}
+    .drop span{display:block;font-size:12px;color:var(--muted);margin-top:3px}
+
+    .select{
+      border:1px solid var(--line);
       background: rgba(255,255,255,.04);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius: 14px;
+      outline:none;
     }
 
     .stats{
       margin-top:12px;
-      display:grid;gap:10px;
-      grid-template-columns: repeat(4, 1fr);
+      display:grid;grid-template-columns:repeat(4,1fr);gap:10px;
     }
-    @media (max-width: 980px){
-      .stats{grid-template-columns: repeat(2, 1fr);}
-    }
-
+    @media (max-width: 980px){ .stats{grid-template-columns:repeat(2,1fr)} }
     .stat{
       border:1px solid var(--line);
       background: rgba(255,255,255,.03);
       border-radius: 16px;
       padding:10px 12px;
-      box-shadow: 0 10px 22px rgba(0,0,0,.22);
     }
     .stat .k{font-size:11px;color:var(--muted)}
-    .stat .v{margin-top:2px;font-size:18px;font-weight:900;letter-spacing:.2px}
-
+    .stat .v{margin-top:2px;font-size:18px;font-weight:950}
     .progress{
       margin-top:12px;
       border:1px solid var(--line);
@@ -318,191 +234,215 @@
       border-radius: 999px;
       overflow:hidden;
       height:12px;
-      position:relative;
     }
     .bar{
       width:0%;
       height:100%;
       background: linear-gradient(90deg, var(--brand), var(--brand2));
-      box-shadow: 0 10px 20px rgba(124,58,237,.25);
       transition: width .18s ease;
     }
 
     .log{
       margin-top:12px;
       white-space:pre-wrap;
-      background: rgba(0,0,0,.35);
+      background: rgba(0,0,0,.30);
       border:1px solid var(--line);
       border-radius: 16px;
       padding:12px;
-      min-height:160px;
+      min-height:140px;
       font-size:12px;
-      color: rgba(236,242,255,.85);
+      color: rgba(234,240,255,.85);
       overflow:auto;
     }
 
-    .mini{
-      display:flex;gap:10px;flex-wrap:wrap;align-items:center;
-      font-size:12px;color:var(--muted);
-    }
-
-    .rightList{
-      display:grid;gap:10px
-    }
-    .info{
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.03);
-      border-radius: var(--r);
-      padding:12px;
-      box-shadow: 0 10px 22px rgba(0,0,0,.22);
-      animation: liftIn .6s .08s ease both;
-    }
-    .info h4{margin:0 0 6px;font-size:13px}
-    .info p{margin:0;color:var(--muted);font-size:12px;line-height:1.45}
+    .hide{display:none !important;}
   </style>
 </head>
 
 <body>
-  <div class="bgGlow"></div>
-
   <div class="wrap">
     <div class="top">
       <div class="brand">
-        <div class="mark"></div>
-        <div class="brandText">
-          <p class="name">OverlayForge</p>
-          <p class="tag">Bulk overlay templates — automatically matched by size</p>
+        <div class="logo"></div>
+        <div>
+          <h1>OverlayForge</h1>
+          <p>Apply the right overlay to every image — automatically by size.</p>
         </div>
       </div>
-
       <div class="sizes">
-        <span class="pill"><b>1200×1200</b> Square</span>
-        <span class="pill"><b>1200×628</b> Landscape</span>
-        <span class="pill"><b>960×1200</b> Portrait</span>
+        <div class="pill"><b>1200×1200</b> Square</div>
+        <div class="pill"><b>1200×628</b> Landscape</div>
+        <div class="pill"><b>960×1200</b> Portrait</div>
       </div>
     </div>
 
-    <div class="grid">
-      <!-- LEFT -->
-      <div class="panel">
-        <div class="head">
+    <div class="tabs">
+      <div class="tab active" data-tab="templates">1) Templates</div>
+      <div class="tab" data-tab="upload">2) Upload</div>
+      <div class="tab" data-tab="export">3) Export</div>
+    </div>
+
+    <!-- TEMPLATES -->
+    <div class="panel" id="tab_templates">
+      <div class="head">
+        <div>
+          <h2>Upload overlay templates</h2>
+          <div class="hint">Overlays must match the exact size. No resizing.</div>
+        </div>
+        <div class="hint" id="topStatus">Waiting</div>
+      </div>
+      <div class="body">
+        <div class="grid3">
+
+          <!-- 1200x1200 -->
+          <div class="card">
+            <div class="cardTop">
+              <h3>Square • 1200×1200</h3>
+              <div class="chip" id="chip_1200x1200"><span class="dot"></span><span id="chipText_1200x1200">Not uploaded</span></div>
+            </div>
+
+            <div class="row" style="margin-top:12px">
+              <div style="flex:1">
+                <div class="label">Overlay PNG</div>
+                <button class="btn" id="btnOv_1200x1200">Choose overlay</button>
+                <div class="fileName" id="ovName_1200x1200">—</div>
+                <input class="hiddenInput" id="ov_1200_1200" type="file" accept="image/png"/>
+                <div class="fileName" id="meta_1200x1200"></div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div style="flex:1">
+                <div class="label">Preview base image (optional)</div>
+                <button class="btn btnGhost" id="btnPv_1200x1200">Choose preview image</button>
+                <div class="fileName" id="pvName_1200x1200">—</div>
+                <input class="hiddenInput" id="pv_1200_1200" type="file" accept="image/*"/>
+              </div>
+            </div>
+
+            <div class="thumb">
+              <div class="cap">Preview</div>
+              <canvas id="cv_1200_1200" width="1200" height="1200"></canvas>
+            </div>
+          </div>
+
+          <!-- 1200x628 -->
+          <div class="card">
+            <div class="cardTop">
+              <h3>Landscape • 1200×628</h3>
+              <div class="chip" id="chip_1200x628"><span class="dot"></span><span id="chipText_1200x628">Not uploaded</span></div>
+            </div>
+
+            <div class="row" style="margin-top:12px">
+              <div style="flex:1">
+                <div class="label">Overlay PNG</div>
+                <button class="btn" id="btnOv_1200x628">Choose overlay</button>
+                <div class="fileName" id="ovName_1200x628">—</div>
+                <input class="hiddenInput" id="ov_1200_628" type="file" accept="image/png"/>
+                <div class="fileName" id="meta_1200x628"></div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div style="flex:1">
+                <div class="label">Preview base image (optional)</div>
+                <button class="btn btnGhost" id="btnPv_1200x628">Choose preview image</button>
+                <div class="fileName" id="pvName_1200x628">—</div>
+                <input class="hiddenInput" id="pv_1200_628" type="file" accept="image/*"/>
+              </div>
+            </div>
+
+            <div class="thumb">
+              <div class="cap">Preview</div>
+              <canvas id="cv_1200_628" width="1200" height="628"></canvas>
+            </div>
+          </div>
+
+          <!-- 960x1200 -->
+          <div class="card">
+            <div class="cardTop">
+              <h3>Portrait • 960×1200</h3>
+              <div class="chip" id="chip_960x1200"><span class="dot"></span><span id="chipText_960x1200">Not uploaded</span></div>
+            </div>
+
+            <div class="row" style="margin-top:12px">
+              <div style="flex:1">
+                <div class="label">Overlay PNG</div>
+                <button class="btn" id="btnOv_960x1200">Choose overlay</button>
+                <div class="fileName" id="ovName_960x1200">—</div>
+                <input class="hiddenInput" id="ov_960_1200" type="file" accept="image/png"/>
+                <div class="fileName" id="meta_960x1200"></div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div style="flex:1">
+                <div class="label">Preview base image (optional)</div>
+                <button class="btn btnGhost" id="btnPv_960x1200">Choose preview image</button>
+                <div class="fileName" id="pvName_960x1200">—</div>
+                <input class="hiddenInput" id="pv_960_1200" type="file" accept="image/*"/>
+              </div>
+            </div>
+
+            <div class="thumb">
+              <div class="cap">Preview</div>
+              <canvas id="cv_960_1200" width="960" height="1200"></canvas>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- UPLOAD -->
+    <div class="panel hide" id="tab_upload">
+      <div class="head">
+        <div>
+          <h2>Upload images</h2>
+          <div class="hint">Upload mixed sizes — the right overlay is applied automatically.</div>
+        </div>
+        <div class="hint" id="uploadHint">0 images selected</div>
+      </div>
+      <div class="body">
+        <div class="drop" id="dropZone">
           <div>
-            <h2>Templates</h2>
-            <div class="sub">Upload one overlay PNG for each size. Overlays must match exact dimensions.</div>
+            <strong>Drop images here</strong>
+            <span>Or use the button. (100+ supported)</span>
           </div>
-          <div class="mini" id="statusText">Waiting</div>
-        </div>
-
-        <div class="body">
-          <div class="cards">
-            <!-- 1200x1200 -->
-            <div class="card">
-              <div class="cardTop">
-                <h3>Square • 1200×1200</h3>
-                <div class="chip" id="chip_1200x1200"><i></i>Not uploaded</div>
-              </div>
-              <div class="field">
-                <div class="label">Overlay PNG</div>
-                <input class="input" id="ov_1200_1200" type="file" accept="image/png"/>
-                <div class="meta" id="meta_1200_1200"></div>
-              </div>
-              <div class="field">
-                <div class="label">Preview base image (optional)</div>
-                <input class="input" id="pv_1200_1200" type="file" accept="image/*"/>
-                <div class="preview">
-                  <div class="cap">Preview</div>
-                  <canvas id="cv_1200_1200" width="1200" height="1200"></canvas>
-                </div>
-              </div>
-            </div>
-
-            <!-- 1200x628 -->
-            <div class="card">
-              <div class="cardTop">
-                <h3>Landscape • 1200×628</h3>
-                <div class="chip" id="chip_1200x628"><i></i>Not uploaded</div>
-              </div>
-              <div class="field">
-                <div class="label">Overlay PNG</div>
-                <input class="input" id="ov_1200_628" type="file" accept="image/png"/>
-                <div class="meta" id="meta_1200_628"></div>
-              </div>
-              <div class="field">
-                <div class="label">Preview base image (optional)</div>
-                <input class="input" id="pv_1200_628" type="file" accept="image/*"/>
-                <div class="preview">
-                  <div class="cap">Preview</div>
-                  <canvas id="cv_1200_628" width="1200" height="628"></canvas>
-                </div>
-              </div>
-            </div>
-
-            <!-- 960x1200 -->
-            <div class="card">
-              <div class="cardTop">
-                <h3>Portrait • 960×1200</h3>
-                <div class="chip" id="chip_960x1200"><i></i>Not uploaded</div>
-              </div>
-              <div class="field">
-                <div class="label">Overlay PNG</div>
-                <input class="input" id="ov_960_1200" type="file" accept="image/png"/>
-                <div class="meta" id="meta_960_1200"></div>
-              </div>
-              <div class="field">
-                <div class="label">Preview base image (optional)</div>
-                <input class="input" id="pv_960_1200" type="file" accept="image/*"/>
-                <div class="preview">
-                  <div class="cap">Preview</div>
-                  <canvas id="cv_960_1200" width="960" height="1200"></canvas>
-                </div>
-              </div>
-            </div>
+          <div class="row" style="margin:0">
+            <button class="btn" id="btnImages">Choose images</button>
+            <input class="hiddenInput" id="images" type="file" accept="image/*" multiple/>
+            <select class="select" id="format">
+              <option value="image/png">Export PNG</option>
+              <option value="image/jpeg">Export JPG</option>
+            </select>
           </div>
-
-          <div class="drop" id="dropZone">
-            <div>
-              <strong>Drop images here</strong>
-              <div class="hint">Or use the upload button. Mixed sizes supported.</div>
-            </div>
-            <div class="dropRight">
-              <input class="input" id="images" type="file" accept="image/*" multiple style="max-width:320px"/>
-              <select class="input" id="format" style="max-width:170px">
-                <option value="image/png">Export as PNG</option>
-                <option value="image/jpeg">Export as JPG</option>
-              </select>
-              <button class="btn btnPrimary" id="runBtn" disabled>Download ZIP</button>
-            </div>
-          </div>
-
-          <div class="stats">
-            <div class="stat"><div class="k">Total</div><div class="v" id="st_total">0</div></div>
-            <div class="stat"><div class="k">Processed</div><div class="v" id="st_ok">0</div></div>
-            <div class="stat"><div class="k">Unmatched</div><div class="v" id="st_bad">0</div></div>
-            <div class="stat"><div class="k">Progress</div><div class="v" id="st_prog">0%</div></div>
-          </div>
-
-          <div class="progress"><div class="bar" id="bar"></div></div>
-
-          <div class="log" id="log"></div>
         </div>
-      </div>
 
-      <!-- RIGHT -->
-      <div class="rightList">
-        <div class="info">
-          <h4>Exact-size matching</h4>
-          <p>Images are detected by width × height. The correct overlay is applied only when dimensions match.</p>
+        <div class="stats">
+          <div class="stat"><div class="k">Total</div><div class="v" id="st_total">0</div></div>
+          <div class="stat"><div class="k">Processed</div><div class="v" id="st_ok">0</div></div>
+          <div class="stat"><div class="k">Unmatched</div><div class="v" id="st_bad">0</div></div>
+          <div class="stat"><div class="k">Progress</div><div class="v" id="st_prog">0%</div></div>
         </div>
-        <div class="info">
-          <h4>Output folders</h4>
-          <p>ZIP includes folders: <b>1200x1200</b>, <b>1200x628</b>, <b>960x1200</b>, and <b>unmatched</b>.</p>
-        </div>
-        <div class="info">
-          <h4>Preview before export</h4>
-          <p>Upload one sample base image in each size to confirm positioning.</p>
-        </div>
+        <div class="progress"><div class="bar" id="bar"></div></div>
       </div>
     </div>
+
+    <!-- EXPORT -->
+    <div class="panel hide" id="tab_export">
+      <div class="head">
+        <div>
+          <h2>Export</h2>
+          <div class="hint">Downloads a ZIP with folders: 1200x1200, 1200x628, 960x1200, unmatched</div>
+        </div>
+        <button class="btn btnPrimary" id="runBtn" disabled>Download ZIP</button>
+      </div>
+      <div class="body">
+        <div class="log" id="log"></div>
+      </div>
+    </div>
+
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
@@ -514,12 +454,20 @@
     ];
 
     const els = {
-      overlays: {
+      topStatus: document.getElementById("topStatus"),
+
+      tabs: Array.from(document.querySelectorAll(".tab")),
+      tab_templates: document.getElementById("tab_templates"),
+      tab_upload: document.getElementById("tab_upload"),
+      tab_export: document.getElementById("tab_export"),
+
+      // overlay inputs
+      ov: {
         "1200x1200": document.getElementById("ov_1200_1200"),
         "1200x628":  document.getElementById("ov_1200_628"),
         "960x1200":  document.getElementById("ov_960_1200"),
       },
-      previews: {
+      pv: {
         "1200x1200": document.getElementById("pv_1200_1200"),
         "1200x628":  document.getElementById("pv_1200_628"),
         "960x1200":  document.getElementById("pv_960_1200"),
@@ -534,33 +482,93 @@
         "1200x628":  document.getElementById("chip_1200x628"),
         "960x1200":  document.getElementById("chip_960x1200"),
       },
+      chipText: {
+        "1200x1200": document.getElementById("chipText_1200x1200"),
+        "1200x628":  document.getElementById("chipText_1200x628"),
+        "960x1200":  document.getElementById("chipText_960x1200"),
+      },
       meta: {
-        "1200x1200": document.getElementById("meta_1200_1200"),
-        "1200x628":  document.getElementById("meta_1200_628"),
-        "960x1200":  document.getElementById("meta_960_1200"),
+        "1200x1200": document.getElementById("meta_1200x1200"),
+        "1200x628":  document.getElementById("meta_1200x628"),
+        "960x1200":  document.getElementById("meta_960x1200"),
+      },
+      ovName: {
+        "1200x1200": document.getElementById("ovName_1200x1200"),
+        "1200x628":  document.getElementById("ovName_1200x628"),
+        "960x1200":  document.getElementById("ovName_960x1200"),
+      },
+      pvName: {
+        "1200x1200": document.getElementById("pvName_1200x1200"),
+        "1200x628":  document.getElementById("pvName_1200x628"),
+        "960x1200":  document.getElementById("pvName_960x1200"),
       },
 
+      // buttons that trigger file inputs
+      btnOv: {
+        "1200x1200": document.getElementById("btnOv_1200x1200"),
+        "1200x628":  document.getElementById("btnOv_1200x628"),
+        "960x1200":  document.getElementById("btnOv_960x1200"),
+      },
+      btnPv: {
+        "1200x1200": document.getElementById("btnPv_1200x1200"),
+        "1200x628":  document.getElementById("btnPv_1200x628"),
+        "960x1200":  document.getElementById("btnPv_960x1200"),
+      },
+
+      // upload
       dropZone: document.getElementById("dropZone"),
+      btnImages: document.getElementById("btnImages"),
       images: document.getElementById("images"),
-      runBtn: document.getElementById("runBtn"),
+      uploadHint: document.getElementById("uploadHint"),
       format: document.getElementById("format"),
 
+      // export
+      runBtn: document.getElementById("runBtn"),
+      log: document.getElementById("log"),
+
+      // stats
       st_total: document.getElementById("st_total"),
       st_ok: document.getElementById("st_ok"),
       st_bad: document.getElementById("st_bad"),
       st_prog: document.getElementById("st_prog"),
       bar: document.getElementById("bar"),
-      statusText: document.getElementById("statusText"),
-      log: document.getElementById("log"),
     };
 
     const overlayBitmaps = new Map(); // key -> {bmp,w,h,file}
+
+    function setTab(name){
+      els.tabs.forEach(t => t.classList.toggle("active", t.dataset.tab===name));
+      els.tab_templates.classList.toggle("hide", name!=="templates");
+      els.tab_upload.classList.toggle("hide", name!=="upload");
+      els.tab_export.classList.toggle("hide", name!=="export");
+      window.scrollTo({top:0, behavior:"smooth"});
+    }
+    els.tabs.forEach(t => t.addEventListener("click", () => setTab(t.dataset.tab)));
 
     function log(s){
       els.log.textContent += s + "\n";
       els.log.scrollTop = els.log.scrollHeight;
     }
-    function setStatus(s){ els.statusText.textContent = s; }
+
+    function setChip(key, state, text){
+      const c = els.chip[key];
+      c.classList.remove("ok","bad");
+      if (state==="ok") c.classList.add("ok");
+      if (state==="bad") c.classList.add("bad");
+      els.chipText[key].textContent = text;
+    }
+
+    function updateTopStatus(){
+      const ready = TARGETS.every(t => overlayBitmaps.has(t.key));
+      els.topStatus.textContent = ready ? "Templates ready" : "Waiting";
+    }
+
+    function updateRunEnabled(){
+      const overlaysReady = TARGETS.every(t => overlayBitmaps.has(t.key));
+      const hasImages = els.images.files && els.images.files.length > 0;
+      els.runBtn.disabled = !(overlaysReady && hasImages);
+      updateTopStatus();
+    }
 
     function keyWH(w,h){ return `${w}x${h}`; }
 
@@ -570,153 +578,145 @@
       return await createImageBitmap(blob);
     }
 
-    function setChipState(key, state, text){
-      const c = els.chip[key];
-      c.classList.remove("ok","bad");
-      if (state === "ok") c.classList.add("ok");
-      if (state === "bad") c.classList.add("bad");
-      c.innerHTML = `<i></i>${text}`;
-    }
+    async function loadOverlayFor(key){
+      const f = els.ov[key].files?.[0];
+      els.meta[key].textContent = "";
+      els.ovName[key].textContent = f ? f.name : "—";
 
-    function updateRunEnabled(){
-      const needOverlays = TARGETS.every(t => overlayBitmaps.has(t.key));
-      const hasImages = els.images.files && els.images.files.length > 0;
-      els.runBtn.disabled = !(needOverlays && hasImages);
-    }
-
-    async function loadOverlayFor(targetKey){
-      const f = els.overlays[targetKey].files?.[0];
-      els.meta[targetKey].textContent = "";
       if (!f){
-        overlayBitmaps.delete(targetKey);
-        setChipState(targetKey, null, "Not uploaded");
+        overlayBitmaps.delete(key);
+        setChip(key, null, "Not uploaded");
         updateRunEnabled();
         return;
       }
-
       if (!f.type.includes("png")){
-        overlayBitmaps.delete(targetKey);
-        els.meta[targetKey].innerHTML = `<span class="bad">PNG required</span>`;
-        setChipState(targetKey, "bad", "Invalid file");
+        overlayBitmaps.delete(key);
+        setChip(key, "bad", "PNG required");
+        els.meta[key].innerHTML = `<span style="color:rgba(239,68,68,.95);font-weight:900">Invalid file</span>`;
         updateRunEnabled();
         return;
       }
 
       const bmp = await fileToBitmap(f);
-      const expected = TARGETS.find(t => t.key===targetKey);
-      const ok = bmp.width === expected.w && bmp.height === expected.h;
+      const expected = TARGETS.find(t => t.key===key);
+      const ok = (bmp.width===expected.w && bmp.height===expected.h);
 
-      overlayBitmaps.set(targetKey, { bmp, w:bmp.width, h:bmp.height, file:f });
+      overlayBitmaps.set(key, {bmp, w:bmp.width, h:bmp.height, file:f});
 
-      els.meta[targetKey].innerHTML = ok
-        ? `<span class="good">Ready</span> • <b>${bmp.width}×${bmp.height}</b>`
-        : `<span class="bad">Mismatch</span> • <b>${bmp.width}×${bmp.height}</b> expected <b>${expected.w}×${expected.h}</b>`;
+      if (ok){
+        setChip(key, "ok", "Ready");
+        els.meta[key].innerHTML = `<span style="color:rgba(34,197,94,.95);font-weight:900">OK</span> • ${bmp.width}×${bmp.height}`;
+      }else{
+        setChip(key, "bad", "Mismatch");
+        els.meta[key].innerHTML = `<span style="color:rgba(239,68,68,.95);font-weight:900">Mismatch</span> • ${bmp.width}×${bmp.height} expected ${expected.w}×${expected.h}`;
+      }
 
-      setChipState(targetKey, ok ? "ok" : "bad", ok ? "Ready" : "Mismatch");
+      // refresh preview if base exists
+      const base = els.pv[key].files?.[0];
+      if (base) await renderPreview(key, base);
+
       updateRunEnabled();
-
-      const base = els.previews[targetKey].files?.[0];
-      if (base) await renderPreview(targetKey, base);
     }
 
-    async function renderPreview(targetKey, baseFile){
-      const cv = els.canvas[targetKey];
+    async function renderPreview(key, baseFile){
+      const cv = els.canvas[key];
       const ctx = cv.getContext("2d");
       ctx.clearRect(0,0,cv.width,cv.height);
 
       const baseBmp = await fileToBitmap(baseFile);
-      const expected = TARGETS.find(t => t.key===targetKey);
+      const expected = TARGETS.find(t => t.key===key);
 
-      if (baseBmp.width !== expected.w || baseBmp.height !== expected.h) {
-        ctx.fillStyle = "rgba(255,255,255,.92)";
-        ctx.font = "22px system-ui";
-        ctx.fillText(`Base must be ${expected.w}×${expected.h}`, 20, 56);
-        ctx.font = "16px system-ui";
-        ctx.fillStyle = "rgba(236,242,255,.70)";
-        ctx.fillText(`Your image: ${baseBmp.width}×${baseBmp.height}`, 20, 88);
+      if (baseBmp.width !== expected.w || baseBmp.height !== expected.h){
+        ctx.fillStyle = "rgba(234,240,255,.92)";
+        ctx.font = "20px system-ui";
+        ctx.fillText(`Preview must be ${expected.w}×${expected.h}`, 18, 52);
+        ctx.font = "14px system-ui";
+        ctx.fillStyle = "rgba(234,240,255,.70)";
+        ctx.fillText(`Your image: ${baseBmp.width}×${baseBmp.height}`, 18, 80);
         return;
       }
 
       ctx.drawImage(baseBmp, 0, 0);
 
-      const ov = overlayBitmaps.get(targetKey);
+      const ov = overlayBitmaps.get(key);
       if (!ov) return;
-
       if (ov.w !== expected.w || ov.h !== expected.h) return;
 
-      ctx.drawImage(ov.bmp, 0, 0); // NO RESIZE
+      ctx.drawImage(ov.bmp, 0, 0); // no resize
     }
 
+    // hook custom buttons to hidden inputs
     TARGETS.forEach(t => {
-      setChipState(t.key, null, "Not uploaded");
-      els.overlays[t.key].addEventListener("change", () => loadOverlayFor(t.key));
-      els.previews[t.key].addEventListener("change", async () => {
-        const f = els.previews[t.key].files?.[0];
-        if (!f) return;
-        await renderPreview(t.key, f);
+      setChip(t.key, null, "Not uploaded");
+
+      els.btnOv[t.key].addEventListener("click", () => els.ov[t.key].click());
+      els.btnPv[t.key].addEventListener("click", () => els.pv[t.key].click());
+
+      els.ov[t.key].addEventListener("change", () => loadOverlayFor(t.key));
+
+      els.pv[t.key].addEventListener("change", async () => {
+        const f = els.pv[t.key].files?.[0];
+        els.pvName[t.key].textContent = f ? f.name : "—";
+        if (f) await renderPreview(t.key, f);
       });
     });
 
-    // Drop zone (drag & drop)
-    els.dropZone.addEventListener("dragover", (e) => {
-      e.preventDefault();
-      els.dropZone.classList.add("drag");
-    });
-    els.dropZone.addEventListener("dragleave", () => els.dropZone.classList.remove("drag"));
-    els.dropZone.addEventListener("drop", (e) => {
-      e.preventDefault();
-      els.dropZone.classList.remove("drag");
-      if (!e.dataTransfer?.files?.length) return;
-
-      // Merge dropped files with existing selection (best effort)
-      const dt = new DataTransfer();
-      const existing = Array.from(els.images.files || []);
-      const incoming = Array.from(e.dataTransfer.files || []).filter(f => f.type.startsWith("image/"));
-
-      [...existing, ...incoming].forEach(f => dt.items.add(f));
-      els.images.files = dt.files;
-
-      updateImageStats();
-      updateRunEnabled();
-    });
-
-    function updateImageStats(){
+    // upload images
+    els.btnImages.addEventListener("click", () => els.images.click());
+    function updateUploadStats(){
       const total = els.images.files?.length || 0;
+      els.uploadHint.textContent = `${total} images selected`;
       els.st_total.textContent = String(total);
       els.st_ok.textContent = "0";
       els.st_bad.textContent = "0";
       els.st_prog.textContent = "0%";
       els.bar.style.width = "0%";
     }
-
     els.images.addEventListener("change", () => {
-      updateImageStats();
+      updateUploadStats();
       updateRunEnabled();
     });
 
-    function safeName(name){
-      return name.replace(/[^\w\-\.]+/g, "_");
-    }
+    // drag & drop images
+    els.dropZone.addEventListener("dragover", (e)=>{ e.preventDefault(); els.dropZone.classList.add("drag"); });
+    els.dropZone.addEventListener("dragleave", ()=> els.dropZone.classList.remove("drag"));
+    els.dropZone.addEventListener("drop", (e)=>{
+      e.preventDefault();
+      els.dropZone.classList.remove("drag");
+      const incoming = Array.from(e.dataTransfer.files || []).filter(f => f.type.startsWith("image/"));
+      if (!incoming.length) return;
 
+      const dt = new DataTransfer();
+      const existing = Array.from(els.images.files || []);
+      [...existing, ...incoming].forEach(f => dt.items.add(f));
+      els.images.files = dt.files;
+
+      updateUploadStats();
+      updateRunEnabled();
+    });
+
+    function safeName(name){ return name.replace(/[^\w\-\.]+/g, "_"); }
     async function canvasToBlob(canvas, mime){
       return await new Promise(res => canvas.toBlob(res, mime, mime==="image/jpeg"?0.92:undefined));
     }
 
-    els.runBtn.addEventListener("click", async () => {
+    // export
+    els.log.textContent = "Ready.\n";
+    els.runBtn.addEventListener("click", async ()=>{
       els.runBtn.disabled = true;
       els.log.textContent = "";
+
       const files = Array.from(els.images.files || []);
       const mime = els.format.value;
 
       let ok=0, bad=0;
-      setStatus("Processing…");
 
-      log("Processing started…");
+      log("Processing…");
 
       const zip = new JSZip();
       const unmatched = zip.folder("unmatched");
-      const outFolders = {};
-      TARGETS.forEach(t => outFolders[t.key] = zip.folder(t.key));
+      const out = {};
+      TARGETS.forEach(t => out[t.key] = zip.folder(t.key));
 
       for (let i=0; i<files.length; i++){
         const f = files[i];
@@ -724,7 +724,6 @@
         const pct = Math.round((i / Math.max(1, files.length)) * 100);
         els.st_prog.textContent = pct + "%";
         els.bar.style.width = pct + "%";
-        setStatus(`Processing ${i+1}/${files.length}`);
 
         try{
           const bmp = await fileToBitmap(f);
@@ -733,16 +732,14 @@
 
           if (!target){
             unmatched.folder(k).file(safeName(f.name), await f.arrayBuffer());
-            bad++;
-            els.st_bad.textContent = String(bad);
+            bad++; els.st_bad.textContent = String(bad);
             continue;
           }
 
           const ov = overlayBitmaps.get(target.key);
           if (!ov || ov.w !== target.w || ov.h !== target.h){
             unmatched.folder(k).file(safeName(f.name), await f.arrayBuffer());
-            bad++;
-            els.st_bad.textContent = String(bad);
+            bad++; els.st_bad.textContent = String(bad);
             continue;
           }
 
@@ -751,7 +748,7 @@
           canvas.height = bmp.height;
           const ctx = canvas.getContext("2d");
           ctx.drawImage(bmp, 0, 0);
-          ctx.drawImage(ov.bmp, 0, 0); // no resize
+          ctx.drawImage(ov.bmp, 0, 0);
 
           const outBlob = await canvasToBlob(canvas, mime);
           const outBuf = await outBlob.arrayBuffer();
@@ -760,22 +757,18 @@
           const baseName = f.name.replace(/\.[^.]+$/, "");
           const outName = `${safeName(baseName)}__${k}.${ext}`;
 
-          outFolders[target.key].file(outName, outBuf);
+          out[target.key].file(outName, outBuf);
+          ok++; els.st_ok.textContent = String(ok);
 
-          ok++;
-          els.st_ok.textContent = String(ok);
-
-        } catch(e){
-          bad++;
-          els.st_bad.textContent = String(bad);
+        }catch(e){
+          bad++; els.st_bad.textContent = String(bad);
         }
       }
 
       els.st_prog.textContent = "100%";
       els.bar.style.width = "100%";
-      setStatus("Preparing ZIP…");
-      log("Preparing ZIP…");
 
+      log("Preparing ZIP…");
       const zipBlob = await zip.generateAsync({type:"blob"});
       const a = document.createElement("a");
       a.href = URL.createObjectURL(zipBlob);
@@ -783,15 +776,37 @@
       a.click();
       URL.revokeObjectURL(a.href);
 
-      setStatus("Done ✅");
-      log("Done ✅ ZIP downloaded.");
-
+      log("Done.");
       els.runBtn.disabled = false;
       updateRunEnabled();
     });
 
-    // init
-    els.log.textContent = "Upload 3 overlay templates, then upload images and download ZIP.\n";
+    // move user forward automatically when ready
+    function autoAdvance(){
+      const templatesReady = TARGETS.every(t => overlayBitmaps.has(t.key));
+      if (templatesReady) {
+        // if user still on templates, gently move them to upload
+        if (!document.querySelector('.tab.active')?.dataset?.tab || document.querySelector('.tab.active').dataset.tab === "templates") {
+          setTab("upload");
+        }
+      }
+    }
+    // hook autoAdvance after overlays change
+    TARGETS.forEach(t => els.ov[t.key].addEventListener("change", autoAdvance));
+
+    // export tab becomes useful once images exist
+    function maybeEnableExportTab(){
+      const hasImages = els.images.files && els.images.files.length > 0;
+      if (hasImages) setTab("export");
+    }
+    els.images.addEventListener("change", ()=> {
+      // if templates ready too, push to export
+      const templatesReady = TARGETS.every(t => overlayBitmaps.has(t.key));
+      if (templatesReady) maybeEnableExportTab();
+    });
+
+    updateRunEnabled();
+    updateUploadStats();
   </script>
 </body>
 </html>
