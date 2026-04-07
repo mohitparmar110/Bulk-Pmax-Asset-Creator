@@ -41,9 +41,8 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 @media(max-width:860px){.auth-form{padding:48px 28px}.auth-form::after{display:none}}
 .af-card{width:100%;max-width:400px}
 
-.auth-art{background:var(--deep);position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:0;min-height:100%}
+.auth-art{background:var(--deep);position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:52px}
 @media(max-width:860px){.auth-art{display:none}}
-.aa-quote{flex-shrink:0}
 .aa-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.016) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.016) 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(ellipse 100% 100% at 50% 0%,black 40%,transparent 90%)}
 .aa-glow{position:absolute;top:-100px;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(ellipse,rgba(200,169,110,.08),transparent 65%);pointer-events:none}
 .aa-num{position:absolute;top:-20px;right:-10px;font-family:'Barlow Condensed',sans-serif;font-size:min(280px,22vw);font-weight:900;color:rgba(255,255,255,.022);line-height:1;user-select:none;letter-spacing:-8px}
@@ -589,239 +588,15 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
         <div class="auth-foot">Your images never leave your device. 100% browser-side processing.</div>
       </div>
     </div>
-    <div class="auth-art" style="padding:0;overflow:hidden">
-      <div class="aa-grid"></div>
-      <div class="aa-glow"></div>
-      <!-- Product output showcase -->
-      <div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:36px 32px;gap:0;z-index:2">
-
-        <!-- Section label -->
-        <div style="align-self:flex-start;font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:18px;opacity:.9">Output previews</div>
-
-        <!-- ROW 1: PMax Ad Formats -->
-        <div style="width:100%;margin-bottom:20px">
-          <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(237,232,223,.3);margin-bottom:10px">Google PMax Assets</div>
-          <div style="display:flex;gap:10px;align-items:flex-end">
-            <!-- Square 1:1 -->
-            <div style="flex:0 0 auto;animation:floatA 5s ease-in-out infinite">
-              <svg width="108" height="108" viewBox="0 0 108 108" style="border-radius:8px;overflow:hidden;display:block;box-shadow:0 12px 32px rgba(0,0,0,.5)">
-                <defs>
-                  <linearGradient id="sq-bg" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0%" stop-color="#1a1a2e"/><stop offset="100%" stop-color="#0d1117"/>
-                  </linearGradient>
-                  <linearGradient id="sq-prod" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stop-color="#2a2a3e"/><stop offset="100%" stop-color="#14141e"/>
-                  </linearGradient>
-                </defs>
-                <rect width="108" height="108" fill="url(#sq-bg)"/>
-                <!-- product silhouette - sneaker shape -->
-                <ellipse cx="54" cy="72" rx="34" ry="6" fill="rgba(0,0,0,.4)"/>
-                <path d="M24 65 Q30 45 48 42 Q58 40 68 44 L76 48 Q82 52 80 60 Q78 66 70 68 L30 68 Q24 68 24 65Z" fill="url(#sq-prod)" stroke="rgba(255,255,255,.08)" stroke-width=".5"/>
-                <path d="M42 42 Q48 35 58 38 L66 42 Q60 40 50 43Z" fill="rgba(200,169,110,.35)"/>
-                <path d="M52 44 L68 44 L74 50 L68 48 L52 46Z" fill="rgba(255,255,255,.15)"/>
-                <!-- overlay bar at bottom -->
-                <rect x="0" y="82" width="108" height="26" fill="rgba(200,169,110,.92)"/>
-                <text x="6" y="97" font-family="sans-serif" font-size="8" font-weight="700" fill="#080604" letter-spacing="1">NIKE INDIA</text>
-                <text x="82" y="97" font-family="sans-serif" font-size="6" fill="#080604" opacity=".7">SHOP NOW</text>
-                <!-- size label -->
-                <rect x="2" y="2" width="38" height="12" rx="2" fill="rgba(0,0,0,.6)"/>
-                <text x="5" y="11" font-family="sans-serif" font-size="6" fill="rgba(255,255,255,.5)" font-weight="600">1200×1200</text>
-              </svg>
-              <div style="font-family:'Barlow Condensed',sans-serif;font-size:8px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:rgba(237,232,223,.3);text-align:center;margin-top:5px">Square</div>
-            </div>
-
-            <!-- Landscape 1.91:1 -->
-            <div style="flex:1;animation:floatB 6s ease-in-out infinite">
-              <svg width="100%" viewBox="0 0 200 105" style="border-radius:8px;overflow:hidden;display:block;box-shadow:0 12px 32px rgba(0,0,0,.5)">
-                <defs>
-                  <linearGradient id="ls-bg" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0%" stop-color="#0d1117"/><stop offset="100%" stop-color="#1a1028"/>
-                  </linearGradient>
-                </defs>
-                <rect width="200" height="105" fill="url(#ls-bg)"/>
-                <!-- lifestyle scene: table top perspective -->
-                <rect x="0" y="52" width="200" height="53" fill="rgba(20,16,10,.6)"/>
-                <rect x="0" y="50" width="200" height="4" fill="rgba(255,255,255,.04)"/>
-                <!-- product: perfume bottle -->
-                <rect x="32" y="22" width="22" height="50" rx="4" fill="rgba(45,35,60,.9)" stroke="rgba(255,255,255,.12)" stroke-width=".5"/>
-                <rect x="38" y="18" width="10" height="8" rx="2" fill="rgba(60,45,80,.9)"/>
-                <rect x="40" y="14" width="6" height="6" rx="1" fill="rgba(200,169,110,.8)"/>
-                <rect x="34" y="30" width="18" height="1" fill="rgba(200,169,110,.4)"/>
-                <text x="36" y="52" font-family="sans-serif" font-size="4" fill="rgba(200,169,110,.7)" font-weight="700">LUXE</text>
-                <!-- product: watch -->
-                <circle cx="130" cy="52" r="20" fill="rgba(25,20,30,.95)" stroke="rgba(255,255,255,.1)" stroke-width="1"/>
-                <circle cx="130" cy="52" r="15" fill="rgba(15,12,20,.9)" stroke="rgba(200,169,110,.3)" stroke-width=".5"/>
-                <line x1="130" y1="52" x2="130" y2="40" stroke="rgba(200,169,110,.8)" stroke-width="1" stroke-linecap="round"/>
-                <line x1="130" y1="52" x2="138" y2="55" stroke="rgba(255,255,255,.6)" stroke-width=".8" stroke-linecap="round"/>
-                <circle cx="130" cy="52" r="1.5" fill="rgba(200,169,110,.9)"/>
-                <!-- overlay bar -->
-                <rect x="0" y="83" width="200" height="22" fill="rgba(13,8,20,.9)"/>
-                <rect x="0" y="83" width="3" height="22" fill="rgba(200,169,110,.9)"/>
-                <text x="10" y="96" font-family="sans-serif" font-size="7" font-weight="700" fill="#ede8df" letter-spacing="1.5">LUXURY FINDS</text>
-                <rect x="160" y="87" width="34" height="11" rx="2" fill="rgba(200,169,110,.9)"/>
-                <text x="163" y="96" font-family="sans-serif" font-size="6" font-weight="700" fill="#080604">SHOP NOW</text>
-                <rect x="2" y="2" width="40" height="11" rx="2" fill="rgba(0,0,0,.6)"/>
-                <text x="5" y="10" font-family="sans-serif" font-size="5.5" fill="rgba(255,255,255,.5)" font-weight="600">1200×628</text>
-              </svg>
-              <div style="font-family:'Barlow Condensed',sans-serif;font-size:8px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:rgba(237,232,223,.3);text-align:center;margin-top:5px">Landscape</div>
-            </div>
-
-            <!-- Portrait 4:5 -->
-            <div style="flex:0 0 auto;animation:floatC 5.5s ease-in-out infinite">
-              <svg width="76" height="95" viewBox="0 0 76 95" style="border-radius:8px;overflow:hidden;display:block;box-shadow:0 12px 32px rgba(0,0,0,.5)">
-                <defs>
-                  <linearGradient id="pt-bg" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stop-color="#0f1820"/><stop offset="100%" stop-color="#080d14"/>
-                  </linearGradient>
-                </defs>
-                <rect width="76" height="95" fill="url(#pt-bg)"/>
-                <!-- model silhouette -->
-                <ellipse cx="38" cy="25" rx="12" ry="14" fill="rgba(60,45,35,.5)"/>
-                <path d="M22 45 Q26 38 38 37 Q50 38 54 45 L58 75 L18 75 Z" fill="rgba(30,25,40,.8)" stroke="rgba(255,255,255,.06)" stroke-width=".5"/>
-                <path d="M30 37 Q33 40 38 40 Q43 40 46 37 L50 50 Q44 54 38 54 Q32 54 26 50Z" fill="rgba(200,169,110,.2)"/>
-                <!-- glow -->
-                <ellipse cx="38" cy="40" rx="20" ry="25" fill="rgba(200,169,110,.04)"/>
-                <!-- overlay -->
-                <rect x="0" y="72" width="76" height="23" fill="rgba(10,7,18,.95)"/>
-                <rect x="0" y="72" width="76" height="1.5" fill="rgba(200,169,110,.6)"/>
-                <text x="5" y="82" font-family="sans-serif" font-size="5.5" font-weight="700" fill="#ede8df" letter-spacing="1">ZOMATO</text>
-                <text x="5" y="91" font-family="sans-serif" font-size="4.5" fill="rgba(237,232,223,.5)">Order now →</text>
-                <rect x="2" y="2" width="36" height="10" rx="2" fill="rgba(0,0,0,.6)"/>
-                <text x="5" y="9.5" font-family="sans-serif" font-size="5" fill="rgba(255,255,255,.5)" font-weight="600">960×1200</text>
-              </svg>
-              <div style="font-family:'Barlow Condensed',sans-serif;font-size:8px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:rgba(237,232,223,.3);text-align:center;margin-top:5px">Portrait</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ROW 2: Spinning Video + Lifestyle -->
-        <div style="width:100%;display:grid;grid-template-columns:1fr 1fr;gap:12px">
-
-          <!-- Spinning Product Video -->
-          <div>
-            <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(237,232,223,.3);margin-bottom:10px">Spinning Video</div>
-            <div style="position:relative;animation:floatB 7s ease-in-out infinite">
-              <svg width="100%" viewBox="0 0 180 140" style="border-radius:8px;display:block;box-shadow:0 12px 32px rgba(0,0,0,.5);overflow:hidden">
-                <rect width="180" height="140" fill="#080a0e"/>
-                <!-- film strip top -->
-                <rect x="0" y="0" width="180" height="16" fill="#040608"/>
-                <rect x="8" y="3" width="12" height="10" rx="1.5" fill="#1a1a22"/>
-                <rect x="26" y="3" width="12" height="10" rx="1.5" fill="#1a1a22"/>
-                <rect x="44" y="3" width="12" height="10" rx="1.5" fill="#1a1a22"/>
-                <rect x="62" y="3" width="12" height="10" rx="1.5" fill="#1a1a22"/>
-                <rect x="80" y="3" width="12" height="10" rx="1.5" fill="#1a1a22"/>
-                <rect x="98" y="3" width="12" height="10" rx="1.5" fill="#1a1a22"/>
-                <rect x="116" y="3" width="12" height="10" rx="1.5" fill="#1a1a22"/>
-                <rect x="134" y="3" width="12" height="10" rx="1.5" fill="#1a1a22"/>
-                <rect x="152" y="3" width="12" height="10" rx="1.5" fill="#1a1a22"/>
-                <!-- main frame - product bottle rotating (animated via CSS) -->
-                <rect x="14" y="20" width="152" height="104" rx="2" fill="#0d0f14"/>
-                <!-- radial light -->
-                <ellipse cx="90" cy="72" rx="55" ry="45" fill="rgba(200,169,110,.04)"/>
-                <!-- product: bottle, slight 3/4 angle -->
-                <ellipse cx="90" cy="112" rx="22" ry="5" fill="rgba(0,0,0,.6)"/>
-                <!-- bottle body -->
-                <path d="M72 50 Q72 40 90 38 Q108 40 108 50 L110 108 Q110 114 90 115 Q70 114 70 108 Z" fill="rgba(30,24,42,.95)" stroke="rgba(255,255,255,.1)" stroke-width=".8"/>
-                <!-- bottle highlight -->
-                <path d="M76 50 Q76 44 85 43 L85 108 Q74 108 72 100 Z" fill="rgba(255,255,255,.06)"/>
-                <!-- label on bottle -->
-                <rect x="76" y="62" width="28" height="30" rx="2" fill="rgba(200,169,110,.15)" stroke="rgba(200,169,110,.4)" stroke-width=".5"/>
-                <text x="78" y="74" font-family="sans-serif" font-size="4" fill="rgba(200,169,110,.9)" font-weight="700" letter-spacing="1">LUXE</text>
-                <text x="78" y="81" font-family="sans-serif" font-size="3" fill="rgba(237,232,223,.5)" letter-spacing=".5">PARFUM</text>
-                <!-- neck -->
-                <rect x="84" y="30" width="12" height="12" rx="2" fill="rgba(35,28,50,.95)"/>
-                <rect x="86" y="26" width="8" height="6" rx="1.5" fill="rgba(200,169,110,.7)"/>
-                <!-- rotation arc indicator -->
-                <path d="M 50 90 A 40 40 0 0 1 130 90" fill="none" stroke="rgba(200,169,110,.2)" stroke-width=".8" stroke-dasharray="3 2"/>
-                <polygon points="130,90 134,85 134,95" fill="rgba(200,169,110,.4)"/>
-                <!-- film strip bottom -->
-                <rect x="0" y="124" width="180" height="16" fill="#040608"/>
-                <rect x="8" y="127" width="12" height="10" rx="1.5" fill="#1a1a22"/>
-                <rect x="26" y="127" width="12" height="10" rx="1.5" fill="#1a1a22"/>
-                <rect x="44" y="127" width="12" height="10" rx="1.5" fill="#1a1a22"/>
-                <rect x="62" y="127" width="12" height="10" rx="1.5" fill="#1a1a22"/>
-                <rect x="80" y="127" width="12" height="10" rx="1.5" fill="#1a1a22"/>
-                <rect x="98" y="127" width="12" height="10" rx="1.5" fill="#1a1a22"/>
-                <rect x="116" y="127" width="12" height="10" rx="1.5" fill="#1a1a22"/>
-                <rect x="134" y="127" width="12" height="10" rx="1.5" fill="#1a1a22"/>
-                <rect x="152" y="127" width="12" height="10" rx="1.5" fill="#1a1a22"/>
-                <!-- play/export tag -->
-                <rect x="62" y="28" width="56" height="16" rx="3" fill="rgba(0,0,0,.7)"/>
-                <polygon points="70,33 70,43 78,38" fill="rgba(200,169,110,.8)"/>
-                <text x="83" y="40" font-family="sans-serif" font-size="5.5" fill="rgba(237,232,223,.7)" font-weight="600">360° MP4</text>
-              </svg>
-              <div style="font-family:'Barlow Condensed',sans-serif;font-size:8px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:rgba(237,232,223,.3);margin-top:5px">Product · 360°</div>
-            </div>
-          </div>
-
-          <!-- Lifestyle Image -->
-          <div>
-            <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(237,232,223,.3);margin-bottom:10px">Lifestyle Scene</div>
-            <div style="animation:floatA 6.5s ease-in-out infinite">
-              <svg width="100%" viewBox="0 0 180 140" style="border-radius:8px;display:block;box-shadow:0 12px 32px rgba(0,0,0,.5);overflow:hidden">
-                <defs>
-                  <linearGradient id="ls2-bg" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stop-color="#1a1208"/><stop offset="60%" stop-color="#0e0e14"/><stop offset="100%" stop-color="#080810"/>
-                  </linearGradient>
-                  <radialGradient id="ls2-light" cx="50%" cy="30%" r="60%">
-                    <stop offset="0%" stop-color="rgba(200,169,110,.18)"/><stop offset="100%" stop-color="transparent"/>
-                  </radialGradient>
-                </defs>
-                <rect width="180" height="140" fill="url(#ls2-bg)"/>
-                <rect width="180" height="140" fill="url(#ls2-light)"/>
-                <!-- floor/surface -->
-                <rect x="0" y="90" width="180" height="50" fill="rgba(10,8,6,.7)"/>
-                <rect x="0" y="89" width="180" height="2" fill="rgba(255,255,255,.04)"/>
-                <!-- wall art / texture lines -->
-                <line x1="0" y1="30" x2="180" y2="30" stroke="rgba(255,255,255,.03)" stroke-width="1"/>
-                <line x1="0" y1="60" x2="180" y2="60" stroke="rgba(255,255,255,.03)" stroke-width="1"/>
-                <!-- plant left -->
-                <rect x="8" y="70" width="10" height="22" rx="2" fill="rgba(25,18,12,.9)"/>
-                <ellipse cx="13" cy="65" rx="12" ry="14" fill="rgba(20,35,18,.7)"/>
-                <ellipse cx="8" cy="68" rx="8" ry="9" fill="rgba(18,30,16,.6)"/>
-                <ellipse cx="18" cy="70" rx="7" ry="8" fill="rgba(22,38,20,.6)"/>
-                <!-- main product: sneaker box -->
-                <rect x="48" y="64" width="56" height="38" rx="3" fill="rgba(240,230,215,.92)" stroke="rgba(200,169,110,.3)" stroke-width=".5"/>
-                <rect x="50" y="66" width="52" height="12" fill="rgba(200,169,110,.8)"/>
-                <text x="55" y="75.5" font-family="sans-serif" font-size="6" font-weight="800" fill="#080604" letter-spacing="1.5">NIKE</text>
-                <rect x="52" y="80" width="48" height="1" fill="rgba(0,0,0,.1)"/>
-                <text x="55" y="88" font-family="sans-serif" font-size="4.5" fill="rgba(60,50,40,.8)">Air Max 2024</text>
-                <text x="55" y="95" font-family="sans-serif" font-size="4" fill="rgba(60,50,40,.6)">₹ 12,999</text>
-                <!-- sneaker on top of box -->
-                <ellipse cx="76" cy="66" rx="22" ry="5" fill="rgba(0,0,0,.2)"/>
-                <path d="M55 60 Q60 48 72 46 Q80 45 88 48 L94 52 Q98 56 96 62 Q94 66 88 67 L58 67 Q54 67 55 63Z" fill="rgba(235,225,210,.95)" stroke="rgba(200,169,110,.3)" stroke-width=".5"/>
-                <path d="M70 46 Q76 41 84 44 L90 48 Q84 46 74 49Z" fill="rgba(200,169,110,.6)"/>
-                <path d="M78 48 L92 48 L96 53 L90 51 L78 50Z" fill="rgba(255,255,255,.3)"/>
-                <!-- mirror/reflection on floor -->
-                <path d="M48 102 Q76 108 104 102 L104 140 Q76 140 48 140Z" fill="rgba(240,230,215,.05)"/>
-                <!-- hanging light -->
-                <line x1="110" y1="0" x2="110" y2="35" stroke="rgba(255,255,255,.08)" stroke-width=".8"/>
-                <circle cx="110" cy="38" r="5" fill="rgba(255,250,220,.85)" filter="url(#glow)"/>
-                <ellipse cx="110" cy="38" rx="18" ry="22" fill="rgba(255,250,200,.06)"/>
-                <!-- lifestyle label -->
-                <rect x="0" y="122" width="180" height="18" fill="rgba(6,5,4,.88)"/>
-                <rect x="0" y="122" width="180" height="1" fill="rgba(200,169,110,.3)"/>
-                <text x="8" y="134" font-family="sans-serif" font-size="6" font-weight="700" fill="rgba(200,169,110,.9)" letter-spacing="1.5">LIFESTYLE CREATOR</text>
-                <text x="130" y="134" font-family="sans-serif" font-size="5" fill="rgba(237,232,223,.4)">Auto-composed</text>
-              </svg>
-              <div style="font-family:'Barlow Condensed',sans-serif;font-size:8px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:rgba(237,232,223,.3);margin-top:5px">Scene · Auto</div>
-            </div>
-          </div>
-        </div>
-
+    <div class="auth-art">
+      <div class="aa-grid"></div><div class="aa-glow"></div>
+      <div class="aa-num">OS</div>
+      <div class="aa-floats">
+        <div class="aaf"><div class="aaf-l"><div class="aaf-tag">Active</div><div class="aaf-name">OverlayForge</div><div class="aaf-stat">18 images queued · 5/6 overlays</div></div><span class="aaf-pill pill-live">Live</span></div>
+        <div class="aaf"><div class="aaf-l"><div class="aaf-tag">Ready</div><div class="aaf-name">Spinning Product Video</div><div class="aaf-stat">360° render · 24 frames</div></div><span class="aaf-pill pill-pro">Pro</span></div>
+        <div class="aaf"><div class="aaf-l"><div class="aaf-tag">New</div><div class="aaf-name">Lifestyle Creator</div><div class="aaf-stat">Bulk generate · 12 scenes</div></div><span class="aaf-pill pill-live">Free</span></div>
       </div>
-
-      <!-- Bottom quote overlay -->
-      <div class="aa-quote" style="position:relative;z-index:3;padding:22px 32px;background:linear-gradient(to top,rgba(6,6,10,.98) 0%,rgba(6,6,10,.7) 70%,transparent 100%)">
-        <q style="font-size:clamp(14px,1.6vw,19px);line-height:1.5">The creative OS that turns raw product shots into campaign-ready assets — in seconds.</q>
-        <cite style="margin-top:10px;display:block">Designoir — Creative OS</cite>
-      </div>
-
-      <style>
-        @keyframes floatA{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-        @keyframes floatB{0%,100%{transform:translateY(-4px)}50%{transform:translateY(4px)}}
-        @keyframes floatC{0%,100%{transform:translateY(-3px)}50%{transform:translateY(5px)}}
-      </style>
+      <div class="aa-quote"><q>The creative operating system for performance marketers who refuse to slow down.</q><cite>Designoir — Creative OS</cite></div>
     </div>
   </div>
 </div>
@@ -855,206 +630,14 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
         <div class="auth-foot">Free plan: 3 brands, 50 exports/month, all ad formats.</div>
       </div>
     </div>
-    <div class="auth-art" style="padding:0;overflow:hidden">
-      <div class="aa-grid"></div>
-      <div class="aa-glow"></div>
-      <div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:32px;gap:0;z-index:2">
-
-        <div style="align-self:flex-start;font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:18px">What you'll create</div>
-
-        <!-- TOP ROW: Meta formats side by side -->
-        <div style="width:100%;margin-bottom:14px">
-          <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(237,232,223,.3);margin-bottom:10px">Meta Ads — All 3 Formats</div>
-          <div style="display:flex;gap:10px;align-items:flex-end">
-
-            <!-- Meta Story 9:16 tall -->
-            <div style="flex:0 0 auto;animation:floatC 5s ease-in-out infinite">
-              <svg width="68" height="108" viewBox="0 0 68 108" style="border-radius:9px;display:block;box-shadow:0 12px 32px rgba(0,0,0,.5);overflow:hidden">
-                <defs>
-                  <linearGradient id="st-bg" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stop-color="#1c0e28"/><stop offset="100%" stop-color="#0a0812"/>
-                  </linearGradient>
-                </defs>
-                <rect width="68" height="108" fill="url(#st-bg)"/>
-                <!-- instagram story frame top bar -->
-                <rect x="4" y="5" width="60" height="3" rx="1.5" fill="rgba(255,255,255,.25)"/>
-                <!-- avatar + handle -->
-                <circle cx="12" cy="18" r="6" fill="rgba(200,169,110,.7)"/>
-                <rect x="22" y="14" width="30" height="4" rx="2" fill="rgba(255,255,255,.2)"/>
-                <rect x="22" y="20" width="20" height="3" rx="1.5" fill="rgba(255,255,255,.1)"/>
-                <!-- product scene: food delivery -->
-                <rect x="8" y="32" width="52" height="52" rx="4" fill="rgba(20,15,10,.8)"/>
-                <!-- bowl/food -->
-                <ellipse cx="34" cy="64" rx="20" ry="6" fill="rgba(180,120,40,.4)"/>
-                <ellipse cx="34" cy="58" rx="18" ry="12" fill="rgba(220,160,60,.85)"/>
-                <ellipse cx="34" cy="55" rx="14" ry="8" fill="rgba(245,190,80,.7)"/>
-                <circle cx="28" cy="53" r="4" fill="rgba(120,60,20,.8)"/>
-                <circle cx="38" cy="52" r="3" fill="rgba(80,140,60,.8)"/>
-                <circle cx="34" cy="57" r="2.5" fill="rgba(180,50,30,.9)"/>
-                <!-- zomato red overlay bar -->
-                <rect x="0" y="84" width="68" height="24" fill="rgba(220,40,40,.95)"/>
-                <text x="6" y="95" font-family="sans-serif" font-size="6" font-weight="800" fill="#fff" letter-spacing="1">ZOMATO</text>
-                <text x="6" y="104" font-family="sans-serif" font-size="4.5" fill="rgba(255,255,255,.8)">Order in 30 min →</text>
-                <rect x="2" y="2" width="32" height="9" rx="1.5" fill="rgba(0,0,0,.6)"/>
-                <text x="4" y="9" font-family="sans-serif" font-size="4.5" fill="rgba(255,255,255,.45)" font-weight="600">1080×1920</text>
-              </svg>
-              <div style="font-family:'Barlow Condensed',sans-serif;font-size:8px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:rgba(237,232,223,.3);text-align:center;margin-top:5px">Story</div>
-            </div>
-
-            <!-- Meta Square 1:1 -->
-            <div style="flex:0 0 auto;animation:floatA 6s ease-in-out infinite">
-              <svg width="108" height="108" viewBox="0 0 108 108" style="border-radius:9px;display:block;box-shadow:0 12px 32px rgba(0,0,0,.5);overflow:hidden">
-                <defs>
-                  <linearGradient id="msq-bg" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0%" stop-color="#0e1828"/><stop offset="100%" stop-color="#080e18"/>
-                  </linearGradient>
-                </defs>
-                <rect width="108" height="108" fill="url(#msq-bg)"/>
-                <!-- tech product: phone mockup -->
-                <rect x="30" y="14" width="48" height="80" rx="8" fill="rgba(20,22,30,.95)" stroke="rgba(255,255,255,.12)" stroke-width="1"/>
-                <rect x="34" y="20" width="40" height="66" rx="4" fill="rgba(10,12,18,.95)"/>
-                <!-- screen content -->
-                <rect x="34" y="20" width="40" height="66" rx="4" fill="rgba(15,20,35,.9)"/>
-                <rect x="36" y="28" width="36" height="20" rx="2" fill="rgba(30,60,120,.5)"/>
-                <rect x="36" y="52" width="24" height="3" rx="1.5" fill="rgba(255,255,255,.2)"/>
-                <rect x="36" y="58" width="18" height="2.5" rx="1" fill="rgba(255,255,255,.12)"/>
-                <rect x="36" y="64" width="30" height="7" rx="2" fill="rgba(59,130,246,.7)"/>
-                <text x="39" y="70" font-family="sans-serif" font-size="4.5" fill="#fff" font-weight="700">Buy Now</text>
-                <!-- phone notch -->
-                <rect x="46" y="20" width="16" height="5" rx="2.5" fill="rgba(20,22,30,.9)"/>
-                <!-- swiggy orange overlay -->
-                <rect x="0" y="84" width="108" height="24" fill="rgba(252,88,0,.95)"/>
-                <text x="7" y="96" font-family="sans-serif" font-size="7" font-weight="800" fill="#fff" letter-spacing="1">SWIGGY</text>
-                <rect x="76" y="88" width="26" height="11" rx="2" fill="rgba(255,255,255,.25)"/>
-                <text x="79" y="97" font-family="sans-serif" font-size="5" fill="#fff" font-weight="700">Order →</text>
-                <rect x="2" y="2" width="38" height="10" rx="2" fill="rgba(0,0,0,.6)"/>
-                <text x="5" y="9.5" font-family="sans-serif" font-size="5" fill="rgba(255,255,255,.45)" font-weight="600">1080×1080</text>
-              </svg>
-              <div style="font-family:'Barlow Condensed',sans-serif;font-size:8px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:rgba(237,232,223,.3);text-align:center;margin-top:5px">Square</div>
-            </div>
-
-            <!-- Meta Landscape 16:9 -->
-            <div style="flex:1;animation:floatB 5.5s ease-in-out infinite">
-              <svg width="100%" viewBox="0 0 160 90" style="border-radius:9px;display:block;box-shadow:0 12px 32px rgba(0,0,0,.5);overflow:hidden">
-                <defs>
-                  <linearGradient id="mls-bg" x1="0" y1="0" x2="1" y2="0">
-                    <stop offset="0%" stop-color="#1a0e0e"/><stop offset="100%" stop-color="#0e0a18"/>
-                  </linearGradient>
-                </defs>
-                <rect width="160" height="90" fill="url(#mls-bg)"/>
-                <!-- credit card product -->
-                <rect x="28" y="18" width="70" height="44" rx="5" fill="rgba(20,16,12,.9)" stroke="rgba(200,169,110,.4)" stroke-width=".8"/>
-                <rect x="28" y="18" width="70" height="44" rx="5" fill="url(#card-grad)"/>
-                <defs><linearGradient id="card-grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="rgba(200,169,110,.12)"/><stop offset="100%" stop-color="rgba(100,80,50,.05)"/></linearGradient></defs>
-                <!-- chip -->
-                <rect x="38" y="28" width="14" height="11" rx="2" fill="rgba(200,169,110,.6)" stroke="rgba(200,169,110,.3)" stroke-width=".5"/>
-                <rect x="40" y="30" width="10" height="7" rx="1" fill="rgba(180,150,80,.4)"/>
-                <!-- card number -->
-                <text x="34" y="48" font-family="monospace" font-size="5" fill="rgba(237,232,223,.6)" letter-spacing="2">•••• 4291</text>
-                <!-- CRED -->
-                <text x="60" y="27" font-family="sans-serif" font-size="6" font-weight="800" fill="rgba(200,169,110,.9)" letter-spacing="1">CRED</text>
-                <!-- glow -->
-                <ellipse cx="63" cy="40" rx="35" ry="25" fill="rgba(200,169,110,.05)"/>
-                <!-- cred dark overlay -->
-                <rect x="0" y="70" width="160" height="20" fill="rgba(8,6,4,.96)"/>
-                <rect x="0" y="70" width="160" height="1" fill="rgba(200,169,110,.5)"/>
-                <text x="8" y="82" font-family="sans-serif" font-size="6" font-weight="700" fill="rgba(200,169,110,.9)" letter-spacing="1.5">CRED</text>
-                <text x="8" y="88" font-family="sans-serif" font-size="4" fill="rgba(237,232,223,.4)">Pay bills. Earn rewards.</text>
-                <rect x="128" y="73" width="26" height="12" rx="2" fill="rgba(200,169,110,.85)"/>
-                <text x="131" y="82" font-family="sans-serif" font-size="5" fill="#080604" font-weight="700">Join →</text>
-                <rect x="2" y="2" width="38" height="10" rx="2" fill="rgba(0,0,0,.6)"/>
-                <text x="5" y="9.5" font-family="sans-serif" font-size="5" fill="rgba(255,255,255,.45)" font-weight="600">1920×1080</text>
-              </svg>
-              <div style="font-family:'Barlow Condensed',sans-serif;font-size:8px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:rgba(237,232,223,.3);text-align:center;margin-top:5px">Landscape</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- BOTTOM ROW: Product page image set -->
-        <div style="width:100%">
-          <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(237,232,223,.3);margin-bottom:10px">Product Page Image Set</div>
-          <div style="display:flex;gap:8px;align-items:flex-start">
-
-            <!-- White bg hero -->
-            <div style="flex:1;animation:floatA 5.8s ease-in-out infinite">
-              <svg width="100%" viewBox="0 0 86 86" style="border-radius:7px;display:block;box-shadow:0 8px 20px rgba(0,0,0,.4);overflow:hidden">
-                <rect width="86" height="86" fill="#f5f5f0"/>
-                <ellipse cx="43" cy="76" rx="24" ry="4" fill="rgba(0,0,0,.08)"/>
-                <path d="M22 65 Q28 48 40 45 Q50 44 58 48 L64 53 Q68 58 66 65 Q64 70 57 71 L27 71 Q21 71 22 67Z" fill="rgba(30,30,40,.92)"/>
-                <path d="M38 45 Q43 39 52 43 L58 47 Q52 45 42 48Z" fill="rgba(200,169,110,.7)"/>
-                <path d="M50 47 L62 47 L66 52 L60 50 L50 49Z" fill="rgba(255,255,255,.4)"/>
-                <rect x="2" y="2" width="28" height="8" rx="1.5" fill="rgba(0,0,0,.12)"/>
-                <text x="4" y="8.5" font-family="sans-serif" font-size="4.5" fill="rgba(0,0,0,.5)" font-weight="600">Hero · BG</text>
-              </svg>
-            </div>
-
-            <!-- Angle shot -->
-            <div style="flex:1;animation:floatB 6.2s ease-in-out infinite">
-              <svg width="100%" viewBox="0 0 86 86" style="border-radius:7px;display:block;box-shadow:0 8px 20px rgba(0,0,0,.4);overflow:hidden">
-                <rect width="86" height="86" fill="#10121a"/>
-                <ellipse cx="43" cy="72" rx="22" ry="5" fill="rgba(0,0,0,.5)"/>
-                <path d="M20 62 Q25 46 38 43 Q48 41 56 46 L62 50 Q66 55 64 63 Q62 68 55 69 L25 69 Q19 69 20 65Z" fill="rgba(235,225,210,.92)"/>
-                <path d="M36 43 Q41 37 50 41 L56 45 Q50 43 40 46Z" fill="rgba(200,169,110,.65)"/>
-                <path d="M48 45 L60 45 L64 50 L58 48 L48 47Z" fill="rgba(255,255,255,.35)"/>
-                <rect x="2" y="2" width="28" height="8" rx="1.5" fill="rgba(0,0,0,.6)"/>
-                <text x="4" y="8.5" font-family="sans-serif" font-size="4.5" fill="rgba(255,255,255,.4)" font-weight="600">Angle</text>
-              </svg>
-            </div>
-
-            <!-- Infographic -->
-            <div style="flex:1;animation:floatC 5.2s ease-in-out infinite">
-              <svg width="100%" viewBox="0 0 86 86" style="border-radius:7px;display:block;box-shadow:0 8px 20px rgba(0,0,0,.4);overflow:hidden">
-                <rect width="86" height="86" fill="#0a0c14"/>
-                <rect x="6" y="8" width="74" height="70" rx="3" fill="rgba(15,18,28,.8)" stroke="rgba(200,169,110,.15)" stroke-width=".5"/>
-                <!-- mini sneaker icon -->
-                <path d="M18 40 Q21 34 28 33 Q32 32 36 34 L38 36 Q40 38 39 41 Q38 43 35 43 L19 43 Q17 43 18 41Z" fill="rgba(235,225,210,.7)"/>
-                <!-- feature bullets -->
-                <circle cx="12" cy="52" r="2" fill="rgba(200,169,110,.8)"/>
-                <rect x="17" y="50" width="28" height="3" rx="1.5" fill="rgba(255,255,255,.12)"/>
-                <circle cx="12" cy="60" r="2" fill="rgba(77,184,150,.8)"/>
-                <rect x="17" y="58" width="22" height="3" rx="1.5" fill="rgba(255,255,255,.12)"/>
-                <circle cx="12" cy="68" r="2" fill="rgba(255,255,255,.3)"/>
-                <rect x="17" y="66" width="26" height="3" rx="1.5" fill="rgba(255,255,255,.12)"/>
-                <!-- size chart area right -->
-                <rect x="50" y="48" width="30" height="24" rx="2" fill="rgba(200,169,110,.06)" stroke="rgba(200,169,110,.2)" stroke-width=".5"/>
-                <text x="55" y="57" font-family="sans-serif" font-size="4" fill="rgba(200,169,110,.7)" font-weight="700">UK 7–12</text>
-                <text x="55" y="64" font-family="sans-serif" font-size="3.5" fill="rgba(237,232,223,.3)">Available</text>
-                <rect x="2" y="2" width="34" height="8" rx="1.5" fill="rgba(0,0,0,.6)"/>
-                <text x="4" y="8.5" font-family="sans-serif" font-size="4.5" fill="rgba(255,255,255,.4)" font-weight="600">Infographic</text>
-              </svg>
-            </div>
-
-            <!-- Detail shot -->
-            <div style="flex:1;animation:floatA 6.8s ease-in-out infinite">
-              <svg width="100%" viewBox="0 0 86 86" style="border-radius:7px;display:block;box-shadow:0 8px 20px rgba(0,0,0,.4);overflow:hidden">
-                <rect width="86" height="86" fill="#12100c"/>
-                <!-- extreme close up of sole/texture -->
-                <rect x="0" y="0" width="86" height="86" fill="rgba(200,185,160,.06)"/>
-                <!-- macro texture lines -->
-                <line x1="0" y1="20" x2="86" y2="14" stroke="rgba(220,205,180,.08)" stroke-width="3"/>
-                <line x1="0" y1="32" x2="86" y2="26" stroke="rgba(220,205,180,.08)" stroke-width="3"/>
-                <line x1="0" y1="44" x2="86" y2="38" stroke="rgba(220,205,180,.08)" stroke-width="3"/>
-                <line x1="0" y1="56" x2="86" y2="50" stroke="rgba(220,205,180,.08)" stroke-width="3"/>
-                <line x1="0" y1="68" x2="86" y2="62" stroke="rgba(220,205,180,.08)" stroke-width="3"/>
-                <line x1="0" y1="80" x2="86" y2="74" stroke="rgba(220,205,180,.08)" stroke-width="3"/>
-                <!-- focus circle -->
-                <circle cx="43" cy="43" r="22" fill="none" stroke="rgba(200,169,110,.25)" stroke-width="1" stroke-dasharray="3 2"/>
-                <!-- detail: stitching -->
-                <path d="M28 40 Q43 30 58 40" fill="none" stroke="rgba(200,169,110,.6)" stroke-width="1.5" stroke-dasharray="3 2"/>
-                <path d="M28 46 Q43 36 58 46" fill="none" stroke="rgba(200,169,110,.4)" stroke-width="1" stroke-dasharray="3 2"/>
-                <rect x="2" y="2" width="28" height="8" rx="1.5" fill="rgba(0,0,0,.6)"/>
-                <text x="4" y="8.5" font-family="sans-serif" font-size="4.5" fill="rgba(255,255,255,.4)" font-weight="600">Detail</text>
-              </svg>
-            </div>
-          </div>
-        </div>
-
+    <div class="auth-art">
+      <div class="aa-grid"></div><div class="aa-glow"></div><div class="aa-num">7</div>
+      <div class="aa-floats" style="top:42%">
+        <div class="aaf"><div class="aaf-l"><div class="aaf-tag">Free forever</div><div class="aaf-name">3 brand workspaces</div></div></div>
+        <div class="aaf"><div class="aaf-l"><div class="aaf-tag">Included</div><div class="aaf-name">All 6 ad formats — PMax + Meta</div></div></div>
+        <div class="aaf"><div class="aaf-l"><div class="aaf-tag">Privacy</div><div class="aaf-name">Zero server uploads. Ever.</div></div></div>
       </div>
-
-      <div class="aa-quote" style="position:relative;z-index:3;padding:20px 32px;background:linear-gradient(to top,rgba(6,6,10,.98) 0%,rgba(6,6,10,.6) 70%,transparent 100%)">
-        <q style="font-size:clamp(13px,1.5vw,18px);line-height:1.5">From raw product shots to campaign-ready creatives — in under 60 seconds.</q>
-        <cite style="margin-top:10px;display:block">500+ Performance Marketers</cite>
-      </div>
+      <div class="aa-quote"><q>From raw product images to campaign-ready creatives in under 60 seconds.</q><cite>500+ Performance Marketers</cite></div>
     </div>
   </div>
 </div>
@@ -1131,7 +714,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
       <div class="nb-uw">
         <div class="nb-av" id="nbAv">R</div>
         <div class="nb-udrop">
-          <div class="ud-hd"><div class="ud-name" id="udName">Rahul Kapoor</div><div class="ud-email" id="udEmail"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="50223138253c103137353e33297e333f3d">[email&#160;protected]</a></div><div class="ud-plan" id="udPlan">Pro Plan</div></div>
+          <div class="ud-hd"><div class="ud-name" id="udName">Rahul Kapoor</div><div class="ud-email" id="udEmail">rahul@agency.com</div><div class="ud-plan" id="udPlan">Pro Plan</div></div>
           <div class="ud-item" onclick="switchPanel('profile')">Profile &amp; Settings</div>
           <div class="ud-item" onclick="switchPanel('billing')">Billing &amp; Subscription</div>
           <div class="ud-item" onclick="switchPanel('usage')">Usage &amp; Credits</div>
@@ -1250,7 +833,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
           <div><div class="prof-id">
             <div class="prof-mono" id="pfMono">R</div>
             <div class="prof-name" id="pfName">Rahul Kapoor</div>
-            <div class="prof-email" id="pfEmail2"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b8cad9d0cdd4f8d9dfddd6dbc196dbd7d5">[email&#160;protected]</a></div>
+            <div class="prof-email" id="pfEmail2">rahul@agency.com</div>
             <div class="prof-ptag" id="pfPlan">Pro Plan</div>
             <div class="prof-kpis"><div class="kpi"><div class="kpi-v">247</div><div class="kpi-l">Exports</div></div><div class="kpi"><div class="kpi-v">3</div><div class="kpi-l">Brands</div></div><div class="kpi"><div class="kpi-v">34</div><div class="kpi-l">Credits</div></div><div class="kpi"><div class="kpi-v">6.2h</div><div class="kpi-l">Saved</div></div></div>
             <button class="btn sm danger" style="width:100%;justify-content:center" onclick="doLogout()">Sign Out</button>
@@ -1307,7 +890,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
       <div class="nb-uw">
         <div class="nb-av" id="ofNbAv">R</div>
         <div class="nb-udrop">
-          <div class="ud-hd"><div class="ud-name" id="ofUdName">Rahul Kapoor</div><div class="ud-email" id="ofUdEmail"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c6b4a7aeb3aa86a7a1a3a8a5bfe8a5a9ab">[email&#160;protected]</a></div></div>
+          <div class="ud-hd"><div class="ud-name" id="ofUdName">Rahul Kapoor</div><div class="ud-email" id="ofUdEmail">rahul@agency.com</div></div>
           <div class="ud-item" onclick="goto('pg-dashboard');switchPanel('home')">Back to Dashboard</div>
           <div class="ud-sep"></div>
           <div class="ud-item red" onclick="doLogout()">Sign Out</div>
@@ -1393,7 +976,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 // ═══════════════════════════════════════
 // STATE & CONSTANTS
 // ═══════════════════════════════════════
@@ -1985,4 +1568,14 @@ function checkStr(pw){
   const cls=str<=1?'w':str<=2?'f':'s';
   const lbl=['','Weak','Fair','Fair','Strong'][str];
   for(let i=0;i<str;i++){const e=document.getElementById(segs[i]);if(e)e.classList.add(cls)}
-  const h=document.getElementById('pwHint');if(h)h.textC
+  const h=document.getElementById('pwHint');if(h)h.textContent=pw?lbl+' password':'Enter a password';
+}
+function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML}
+function safe(s){return s.replace(/[^\w\-\.]+/g,'_')}
+
+// Keyboard
+document.getElementById('loginPw')?.addEventListener('keydown',e=>{if(e.key==='Enter')doLogin()});
+document.getElementById('loginEmail')?.addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('loginPw').focus()});
+</script>
+</body>
+</html>
