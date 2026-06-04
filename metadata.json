@@ -1,0 +1,7 @@
+{
+  "name": "DesignoirSpace – AI Campaign Studio",
+  "description": "Your Creative OS for teams to generate bulk marketing assets, manage brand kits, and export affiliate feeds with an AI-first approach.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
